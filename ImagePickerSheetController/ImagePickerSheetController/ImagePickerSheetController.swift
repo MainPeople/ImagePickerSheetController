@@ -35,7 +35,7 @@ public enum ImagePickerMediaType {
 open class ImagePickerSheetController: UIViewController {
     
     fileprivate lazy var sheetController: SheetController = {
-        let controller = SheetController(previewCollectionView: self.previewCollectionView)
+        let controller = SheetController(previewCollectionView: self.previewPhotoCollectionView)
         controller.actionHandlingCallback = { [weak self] in
             self?.dismiss(animated: true, completion: { _ in
                 // Possible retain cycle when action handlers hold a reference to the IPSC
@@ -51,30 +51,41 @@ open class ImagePickerSheetController: UIViewController {
         return sheetController.sheetCollectionView
     }
     
-    fileprivate(set) lazy var previewCollectionView: PreviewCollectionView = {
-        let collectionView = PreviewCollectionView()
-        collectionView.accessibilityIdentifier = "ImagePickerSheetPreview"
+    
+    fileprivate var previewPhotoCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        collectionView.allowsMultipleSelection = true
-        collectionView.imagePreviewLayout.sectionInset = UIEdgeInsets(top: previewInset, left: previewInset, bottom: previewInset, right: previewInset) // previewInset
-        collectionView.imagePreviewLayout.showsSupplementaryViews = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.alwaysBounceHorizontal = true
-        collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
-        
-        // register cells
-        
-        let imagePickerCollectionCellIdentifier = "ImagePickerCollectionCell"
-        let imagePickerLiveCameraCollectionCellIdentifier = "ImagePickerLiveCameraCollectionCell"
-        let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
-        collectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
-        let liveNib = UINib(nibName: "ImagePickerLiveCameraCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
-        collectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
-        
         return collectionView
     }()
+    
+//    fileprivate(set) lazy var previewCollectionView: PreviewCollectionView = {
+//        let collectionView = PreviewCollectionView()
+//        collectionView.accessibilityIdentifier = "ImagePickerSheetPreview"
+//        collectionView.backgroundColor = .clear
+//        collectionView.allowsMultipleSelection = true
+//        collectionView.imagePreviewLayout.sectionInset = UIEdgeInsets(top: previewInset, left: previewInset, bottom: previewInset, right: previewInset) // previewInset
+//        collectionView.imagePreviewLayout.showsSupplementaryViews = false
+//        collectionView.dataSource = self
+//        collectionView.delegate = self
+//        collectionView.showsHorizontalScrollIndicator = false
+//        collectionView.alwaysBounceHorizontal = true
+//        collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
+//        
+//        // register cells
+//        
+//        let imagePickerCollectionCellIdentifier = "ImagePickerCollectionCell"
+//        let imagePickerLiveCameraCollectionCellIdentifier = "ImagePickerLiveCameraCollectionCell"
+//        let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
+//        collectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
+//        let liveNib = UINib(nibName: "ImagePickerLiveCameraCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
+//        collectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
+//        
+//        return collectionView
+//    }()
     
     fileprivate var supplementaryViews = [Int: PreviewSupplementaryView]()
     
@@ -167,11 +178,20 @@ open class ImagePickerSheetController: UIViewController {
     
     // MARK: - View Lifecycle
     
-    override open func loadView() {
-        super.loadView()
-        
-        view.addSubview(backgroundView)
-        view.addSubview(sheetCollectionView)
+//    override open func loadView() {
+//        super.loadView()
+//        
+//        view.addSubview(backgroundView)
+//        view.addSubview(sheetCollectionView)
+//        
+//    }
+    
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        // UI
+        addUIElements()
+        // Collection view
+        setupCollectionViewSettings()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -192,7 +212,7 @@ open class ImagePickerSheetController: UIViewController {
                 if status == .authorized {
                     DispatchQueue.main.async {
                         self.prepareAssets()
-                        self.previewCollectionView.reloadData()
+                        self.previewPhotoCollectionView.reloadData()
                         self.sheetCollectionView.reloadData()
                         self.view.setNeedsLayout()
                         
@@ -212,7 +232,6 @@ open class ImagePickerSheetController: UIViewController {
     
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        debugPrint("previewCollectionView", previewCollectionView.frame, previewCollectionView.bounds)
     }
     
     // MARK: - Actions
@@ -223,6 +242,13 @@ open class ImagePickerSheetController: UIViewController {
     open func addAction(_ action: ImagePickerAction) {
         sheetController.addAction(action)
         view.setNeedsLayout()
+    }
+    
+    // MARK: - UI
+    
+    private func addUIElements() {
+        view.addSubview(backgroundView)
+        view.addSubview(sheetCollectionView)
     }
     
     // MARK: - Images
@@ -283,7 +309,7 @@ open class ImagePickerSheetController: UIViewController {
     
     func enlargePreviewsByCenteringToIndexPath(_ indexPath: IndexPath?, completion: (() -> ())?) {
         enlargedPreviews = true
-        previewCollectionView.imagePreviewLayout.invalidationCenteredIndexPath = indexPath
+//        previewCollectionView.imagePreviewLayout.invalidationCenteredIndexPath = indexPath
         reloadCurrentPreviewHeight(invalidateLayout: false)
         
         view.setNeedsLayout()
@@ -302,17 +328,45 @@ open class ImagePickerSheetController: UIViewController {
     
 }
 
+// MARK: - UICollection view 
+
+extension ImagePickerSheetController {
+    
+    fileprivate func setupCollectionViewSettings() {
+        previewPhotoCollectionView.dataSource = self
+        previewPhotoCollectionView.delegate = self
+        registerCollectionViewElements()
+    }
+    
+    private func registerCollectionViewElements() {
+        previewPhotoCollectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
+        // cells
+        let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
+        previewPhotoCollectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
+        let liveNib = UINib(nibName: "ImagePickerLiveCameraCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
+        previewPhotoCollectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
+    }
+    
+//    fileprivate func changeVideoOrientation(_ size: CGSize) {
+//        guard let cameraCell = collectionView.visibleCells.first as? ImagePickerLiveCameraCollectionCell else { return }
+//        cameraCell.orientationDidChange()
+//    }
+    
+    
+}
+
 // MARK: - UICollectionViewDataSource
 
 extension ImagePickerSheetController: UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard fetchResult != nil else { return 0 }
-        return fetchResult.count
+        return 1 //fetchResult.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        guard fetchResult != nil else { return 1 } // this is a camera }
+        return fetchResult.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -358,15 +412,11 @@ extension ImagePickerSheetController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 95, height: 95)
     }
-//    
-//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
-//    }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let checkmarkWidth = PreviewSupplementaryView.checkmarkImage?.size.width ?? 0
-        return CGSize(width: checkmarkWidth + 2 * previewCheckmarkInset, height: sheetController.previewHeight - 2 * previewInset)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
+    
     
 }
 
@@ -378,7 +428,7 @@ extension ImagePickerSheetController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerCollectionCellIdentifier, for: indexPath) as! ImagePickerCollectionCell
         
         guard fetchResult != nil else { return cell }
-        let asset = fetchResult.object(at: indexPath.section) //- 1)
+        let asset = fetchResult.object(at: indexPath.row) //- 1)
         
         cell.representedAssetIdentifier = asset.localIdentifier
         imageManager.requestImage(for: asset, targetSize: CGSize(width: 95, height: 95), contentMode: .aspectFill, options: nil) { (image, info) in

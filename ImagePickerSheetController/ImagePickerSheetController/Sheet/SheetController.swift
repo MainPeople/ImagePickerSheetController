@@ -26,7 +26,7 @@ class SheetController: NSObject {
         return collectionView
     }()
     
-    var previewCollectionView: PreviewCollectionView
+    var previewCollectionView: UICollectionView
     
     fileprivate(set) var actions = [ImagePickerAction]()
     
@@ -42,7 +42,7 @@ class SheetController: NSObject {
     
     // MARK: - Initialization
     
-    init(previewCollectionView: PreviewCollectionView) {
+    init(previewCollectionView: UICollectionView) {
         self.previewCollectionView = previewCollectionView
         
         super.init()
