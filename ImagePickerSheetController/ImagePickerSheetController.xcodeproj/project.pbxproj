@@ -43,6 +43,10 @@
 		49DC4AAF1B14FB9A00B4E78E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */; };
 		49F3118A1B15074100ACD6A7 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 49F3118C1B15074100ACD6A7 /* Localizable.stringsdict */; };
 		49F3118D1B15074400ACD6A7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49F3118F1B15074400ACD6A7 /* Localizable.strings */; };
+		A6B121B91E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */; };
+		A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */; };
+		A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */; };
+		A6B121BC1E4C930F001C19ED /* ImagePickerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +137,10 @@
 		49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		49F3118B1B15074100ACD6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		49F3118E1B15074400ACD6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerLiveCameraCollectionCell.swift; sourceTree = "<group>"; };
+		A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerLiveCameraCollectionCell.xib; sourceTree = "<group>"; };
+		A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCollectionCell.swift; sourceTree = "<group>"; };
+		A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerCollectionCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +178,7 @@
 		4981CAFC1B8B246000A09750 /* Sheet */ = {
 			isa = PBXGroup;
 			children = (
+				A6B121B41E4C92CC001C19ED /* Cells */,
 				49665AD61B8F2DC6005AA666 /* SheetController.swift */,
 				499E65CE1B8E317C005B807F /* SheetCollectionViewLayout.swift */,
 				4981CB081B8B255A00A09750 /* SheetCollectionViewCell.swift */,
@@ -291,6 +300,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A6B121B41E4C92CC001C19ED /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */,
+				A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */,
+				A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */,
+				A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -378,12 +398,13 @@
 					};
 					49DC4A5B1B14F1BC00B4E78E = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 35L77VM7C3;
 						LastSwiftMigration = 0800;
 						TestTargetID = 49DC4A851B14F31500B4E78E;
 					};
 					49DC4A851B14F31500B4E78E = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 5953RHWYWT;
+						DevelopmentTeam = 35L77VM7C3;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -413,6 +434,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6B121BC1E4C930F001C19ED /* ImagePickerCollectionCell.xib in Resources */,
+				A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */,
 				49DC4A7E1B14F22200B4E78E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,10 +471,12 @@
 				494B3B711B8EF3CB004B467C /* ImagePickerSheetController.swift in Sources */,
 				49665AD71B8F2DC6005AA666 /* SheetController.swift in Sources */,
 				499E65CF1B8E317C005B807F /* SheetCollectionViewLayout.swift in Sources */,
+				A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */,
 				4981CB031B8B246000A09750 /* SheetPreviewCollectionViewCell.swift in Sources */,
 				4981CB091B8B255A00A09750 /* SheetCollectionViewCell.swift in Sources */,
 				4981CB071B8B246000A09750 /* PreviewSupplementaryView.swift in Sources */,
 				4981CB051B8B246000A09750 /* PreviewCollectionView.swift in Sources */,
+				A6B121B91E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift in Sources */,
 				4944CA851B8DB7F3007EA349 /* SheetActionCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,7 +658,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ImagePickerSheetController/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -653,7 +678,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ImagePickerSheetController/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -666,7 +691,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/iOS";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -686,7 +711,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/iOS";
 				INFOPLIST_FILE = ImagePickerSheetControllerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -704,14 +729,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
@@ -724,10 +750,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
