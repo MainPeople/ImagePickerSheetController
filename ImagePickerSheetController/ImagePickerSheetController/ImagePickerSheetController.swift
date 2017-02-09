@@ -61,31 +61,7 @@ open class ImagePickerSheetController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-    
-//    fileprivate(set) lazy var previewCollectionView: PreviewCollectionView = {
-//        let collectionView = PreviewCollectionView()
-//        collectionView.accessibilityIdentifier = "ImagePickerSheetPreview"
-//        collectionView.backgroundColor = .clear
-//        collectionView.allowsMultipleSelection = true
-//        collectionView.imagePreviewLayout.sectionInset = UIEdgeInsets(top: previewInset, left: previewInset, bottom: previewInset, right: previewInset) // previewInset
-//        collectionView.imagePreviewLayout.showsSupplementaryViews = false
-//        collectionView.dataSource = self
-//        collectionView.delegate = self
-//        collectionView.showsHorizontalScrollIndicator = false
-//        collectionView.alwaysBounceHorizontal = true
-//        collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
-//        
-//        // register cells
-//        
-//        let imagePickerCollectionCellIdentifier = "ImagePickerCollectionCell"
-//        let imagePickerLiveCameraCollectionCellIdentifier = "ImagePickerLiveCameraCollectionCell"
-//        let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
-//        collectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
-//        let liveNib = UINib(nibName: "ImagePickerLiveCameraCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
-//        collectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
-//        
-//        return collectionView
-//    }()
+
     
     fileprivate var supplementaryViews = [Int: PreviewSupplementaryView]()
     
@@ -139,6 +115,8 @@ open class ImagePickerSheetController: UIViewController {
     
     fileprivate let imageManager = PHCachingImageManager()
     
+    // MARK: - Camera engine 
+    fileprivate var cameraEngine = CameraEngine()
     
     /// Whether the image preview has been elarged. This is the case when at least once
     /// image has been selected.
@@ -178,18 +156,12 @@ open class ImagePickerSheetController: UIViewController {
     
     // MARK: - View Lifecycle
     
-//    override open func loadView() {
-//        super.loadView()
-//        
-//        view.addSubview(backgroundView)
-//        view.addSubview(sheetCollectionView)
-//        
-//    }
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
         // UI
         addUIElements()
+        // Camera 
+        setupCameraEngineSettings()
         // Collection view
         setupCollectionViewSettings()
     }
@@ -213,6 +185,15 @@ open class ImagePickerSheetController: UIViewController {
     
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        cameraEngineLayerFrame()
+    }
+    
+    // MARK: - KVO
+    
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "contentOffset" {
+            changeCameraEngineFrame()
+        }
     }
     
     // MARK: - Actions
@@ -315,6 +296,9 @@ extension ImagePickerSheetController {
         previewPhotoCollectionView.dataSource = self
         previewPhotoCollectionView.delegate = self
         registerCollectionViewElements()
+        
+        // KVO
+        previewPhotoCollectionView.addObserver(self, forKeyPath: "contentOffset", options: [.initial, .old, .new], context: nil)
     }
     
     private func registerCollectionViewElements() {
@@ -441,6 +425,63 @@ extension ImagePickerSheetController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return AnimationController(imagePickerSheetController: self, presenting: false)
+    }
+    
+}
+
+// MARK: - Camera engine
+
+extension ImagePickerSheetController {
+    
+    fileprivate func setupCameraEngineSettings() {
+        cameraEngine.rotationCamera = true
+        cameraEngine.startSession()
+        
+        // FIXME: - here 
+        
+        sheetCollectionView.layer.masksToBounds = true
+    }
+    
+    
+    fileprivate func cameraEngineLayerFrame() {
+        guard let cameraLayer = cameraEngine.previewLayer else { return }
+        cameraLayer.cornerRadius = 7
+        cameraLayer.masksToBounds = true
+        view.layer.addSublayer(cameraLayer)
+    }
+    
+    fileprivate func changeCameraEngineFrame() {
+        debugPrint("previewPhotoCollectionView.contentOffset", previewPhotoCollectionView.contentOffset)
+        guard let cameraLayer = cameraEngine.previewLayer else { return }
+    
+        let contentOffset = previewPhotoCollectionView.contentOffset
+        let sheetFrame = sheetCollectionView.frame
+        
+        debugPrint("sheetFrame", sheetFrame)
+        
+        var frame: CGRect!
+        if contentOffset.x > 0 {
+            var width: CGFloat!
+            if contentOffset.x >= 95 {
+                width = 0
+            } else {
+                width = 95 - contentOffset.x
+            }
+            
+            frame = CGRect(x: 20, y: sheetFrame.origin.y + 13.5, width: width, height: 95)
+        } else {
+            frame = CGRect(x: 20 - contentOffset.x, y: sheetFrame.origin.y + 12, width: 95 - contentOffset.x, height: 95)
+        }
+        
+        
+        // right 20 top 10 
+        cameraLayer.frame = frame
+
+//        UIView.animate(withDuration: 0, animations: {
+//            cameraLayer.frame = frame
+//        }) { (completion) in
+//            
+//        }
     }
     
 }

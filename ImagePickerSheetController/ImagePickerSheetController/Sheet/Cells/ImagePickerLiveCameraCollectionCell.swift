@@ -21,26 +21,26 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        setupAVCapture()
+//        setupAVCapture()
         setupViewSettings()
-        orientationDidChange()
-        setupUIHierarchy()
+//        orientationDidChange()
+//        setupUIHierarchy()
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] (timer) in
-            guard self != nil else { return }
-            if self!.cameraSession.isRunning == false {
-                self!.cameraSession.startRunning()
-            }
-        }
+//        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] (timer) in
+//            guard self != nil else { return }
+//            if self!.cameraSession.isRunning == false {
+//                self!.cameraSession.startRunning()
+//            }
+//        }
       
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        orientationDidChange()
+//        orientationDidChange()
     }
     
     func orientationDidChange() {
