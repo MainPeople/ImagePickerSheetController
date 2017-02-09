@@ -407,7 +407,6 @@ extension ImagePickerSheetController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-
 extension ImagePickerSheetController: UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
