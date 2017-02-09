@@ -47,6 +47,16 @@
 		A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */; };
 		A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */; };
 		A6B121BC1E4C930F001C19ED /* ImagePickerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */; };
+		A6B121DE1E4CECD2001C19ED /* CameraEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = A6B121D41E4CECD2001C19ED /* CameraEngine.h */; };
+		A6B121DF1E4CECD2001C19ED /* CameraEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D51E4CECD2001C19ED /* CameraEngine.swift */; };
+		A6B121E01E4CECD2001C19ED /* CameraEngineCaptureOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D61E4CECD2001C19ED /* CameraEngineCaptureOutput.swift */; };
+		A6B121E11E4CECD2001C19ED /* CameraEngineDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D71E4CECD2001C19ED /* CameraEngineDevice.swift */; };
+		A6B121E21E4CECD2001C19ED /* CameraEngineDeviceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D81E4CECD2001C19ED /* CameraEngineDeviceInput.swift */; };
+		A6B121E31E4CECD2001C19ED /* CameraEngineFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D91E4CECD2001C19ED /* CameraEngineFileManager.swift */; };
+		A6B121E41E4CECD2001C19ED /* CameraEngineGifEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DA1E4CECD2001C19ED /* CameraEngineGifEncoder.swift */; };
+		A6B121E51E4CECD2001C19ED /* CameraEngineMetadataOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */; };
+		A6B121E61E4CECD2001C19ED /* CameraEngineVideoEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */; };
+		A6B121E71E4CECD2001C19ED /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A6B121DD1E4CECD2001C19ED /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +151,16 @@
 		A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerLiveCameraCollectionCell.xib; sourceTree = "<group>"; };
 		A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCollectionCell.swift; sourceTree = "<group>"; };
 		A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerCollectionCell.xib; sourceTree = "<group>"; };
+		A6B121D41E4CECD2001C19ED /* CameraEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraEngine.h; sourceTree = "<group>"; };
+		A6B121D51E4CECD2001C19ED /* CameraEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngine.swift; sourceTree = "<group>"; };
+		A6B121D61E4CECD2001C19ED /* CameraEngineCaptureOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineCaptureOutput.swift; sourceTree = "<group>"; };
+		A6B121D71E4CECD2001C19ED /* CameraEngineDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineDevice.swift; sourceTree = "<group>"; };
+		A6B121D81E4CECD2001C19ED /* CameraEngineDeviceInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineDeviceInput.swift; sourceTree = "<group>"; };
+		A6B121D91E4CECD2001C19ED /* CameraEngineFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineFileManager.swift; sourceTree = "<group>"; };
+		A6B121DA1E4CECD2001C19ED /* CameraEngineGifEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineGifEncoder.swift; sourceTree = "<group>"; };
+		A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineMetadataOutput.swift; sourceTree = "<group>"; };
+		A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineVideoEncoder.swift; sourceTree = "<group>"; };
+		A6B121DD1E4CECD2001C19ED /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +244,7 @@
 		49DC4A531B14F1BC00B4E78E /* ImagePickerSheetController */ = {
 			isa = PBXGroup;
 			children = (
+				A6B121D31E4CEC98001C19ED /* CameraEngine */,
 				49DC4A6E1B14F1F600B4E78E /* ImagePickerAction.swift */,
 				49DC4A6D1B14F1F600B4E78E /* AnimationController.swift */,
 				494B3B701B8EF3CB004B467C /* ImagePickerSheetController.swift */,
@@ -311,6 +332,23 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		A6B121D31E4CEC98001C19ED /* CameraEngine */ = {
+			isa = PBXGroup;
+			children = (
+				A6B121D41E4CECD2001C19ED /* CameraEngine.h */,
+				A6B121D51E4CECD2001C19ED /* CameraEngine.swift */,
+				A6B121D61E4CECD2001C19ED /* CameraEngineCaptureOutput.swift */,
+				A6B121D71E4CECD2001C19ED /* CameraEngineDevice.swift */,
+				A6B121D81E4CECD2001C19ED /* CameraEngineDeviceInput.swift */,
+				A6B121D91E4CECD2001C19ED /* CameraEngineFileManager.swift */,
+				A6B121DA1E4CECD2001C19ED /* CameraEngineGifEncoder.swift */,
+				A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */,
+				A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */,
+				A6B121DD1E4CECD2001C19ED /* Info.plist */,
+			);
+			path = CameraEngine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -319,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49DC4A571B14F1BC00B4E78E /* ImagePickerSheetController.h in Headers */,
+				A6B121DE1E4CECD2001C19ED /* CameraEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +473,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6B121E71E4CECD2001C19ED /* Info.plist in Resources */,
 				A6B121BC1E4C930F001C19ED /* ImagePickerCollectionCell.xib in Resources */,
 				A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */,
 				49DC4A7E1B14F22200B4E78E /* Images.xcassets in Resources */,
@@ -464,19 +504,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6B121E11E4CECD2001C19ED /* CameraEngineDevice.swift in Sources */,
+				A6B121E21E4CECD2001C19ED /* CameraEngineDeviceInput.swift in Sources */,
 				4981CB041B8B246000A09750 /* PreviewCollectionViewCell.swift in Sources */,
+				A6B121E61E4CECD2001C19ED /* CameraEngineVideoEncoder.swift in Sources */,
 				49DC4A751B14F1F600B4E78E /* AnimationController.swift in Sources */,
+				A6B121DF1E4CECD2001C19ED /* CameraEngine.swift in Sources */,
 				4981CB061B8B246000A09750 /* PreviewCollectionViewLayout.swift in Sources */,
+				A6B121E31E4CECD2001C19ED /* CameraEngineFileManager.swift in Sources */,
 				49DC4A761B14F1F600B4E78E /* ImagePickerAction.swift in Sources */,
+				A6B121E41E4CECD2001C19ED /* CameraEngineGifEncoder.swift in Sources */,
 				494B3B711B8EF3CB004B467C /* ImagePickerSheetController.swift in Sources */,
 				49665AD71B8F2DC6005AA666 /* SheetController.swift in Sources */,
 				499E65CF1B8E317C005B807F /* SheetCollectionViewLayout.swift in Sources */,
 				A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */,
 				4981CB031B8B246000A09750 /* SheetPreviewCollectionViewCell.swift in Sources */,
 				4981CB091B8B255A00A09750 /* SheetCollectionViewCell.swift in Sources */,
+				A6B121E51E4CECD2001C19ED /* CameraEngineMetadataOutput.swift in Sources */,
 				4981CB071B8B246000A09750 /* PreviewSupplementaryView.swift in Sources */,
 				4981CB051B8B246000A09750 /* PreviewCollectionView.swift in Sources */,
 				A6B121B91E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift in Sources */,
+				A6B121E01E4CECD2001C19ED /* CameraEngineCaptureOutput.swift in Sources */,
 				4944CA851B8DB7F3007EA349 /* SheetActionCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
