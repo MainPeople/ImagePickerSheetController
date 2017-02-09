@@ -206,26 +206,7 @@ open class ImagePickerSheetController: UIViewController {
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if PHPhotoLibrary.authorizationStatus() == .notDetermined {
-            PHPhotoLibrary.requestAuthorization() { status in
-                if status == .authorized {
-                    DispatchQueue.main.async {
-                        self.prepareAssets()
-                        self.previewPhotoCollectionView.reloadData()
-                        self.sheetCollectionView.reloadData()
-                        self.view.setNeedsLayout()
-                        
-                        // Explicitely disable animations so it wouldn't animate either
-                        // if it was in a popover
-                        CATransaction.begin()
-                        CATransaction.setDisableActions(true)
-                        self.view.layoutIfNeeded()
-                        CATransaction.commit()
-                    }
-                }
-            }
-        }
+        checkPhotoLibraryAccess()
     }
     
     // MARK: - Layout functions
@@ -251,14 +232,34 @@ open class ImagePickerSheetController: UIViewController {
         view.addSubview(sheetCollectionView)
     }
     
+    private func checkPhotoLibraryAccess() {
+        if PHPhotoLibrary.authorizationStatus() == .notDetermined {
+            PHPhotoLibrary.requestAuthorization() { status in
+                if status == .authorized {
+                    DispatchQueue.main.async {
+                        self.prepareAssets()
+                        self.previewPhotoCollectionView.reloadData()
+                        self.sheetCollectionView.reloadData()
+                        self.view.setNeedsLayout()
+                        
+                        // Explicitely disable animations so it wouldn't animate either
+                        // if it was in a popover
+                        CATransaction.begin()
+                        CATransaction.setDisableActions(true)
+                        self.view.layoutIfNeeded()
+                        CATransaction.commit()
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Images
     
     fileprivate func prepareAssets() {
         requestPhoto()
-//        reloadMaximumPreviewHeight()
         reloadCurrentPreviewHeight(invalidateLayout: false)
     }
-    
     
     private func requestPhoto() {
         // If we get here without a segue, it's because we're visible at app launch,
@@ -304,28 +305,6 @@ open class ImagePickerSheetController: UIViewController {
         sheetController.setPreviewHeight(minimumPreviewHeight, invalidateLayout: invalidate)
     }
     
-    
-    // MARK: -
-    
-    func enlargePreviewsByCenteringToIndexPath(_ indexPath: IndexPath?, completion: (() -> ())?) {
-        enlargedPreviews = true
-//        previewCollectionView.imagePreviewLayout.invalidationCenteredIndexPath = indexPath
-        reloadCurrentPreviewHeight(invalidateLayout: false)
-        
-        view.setNeedsLayout()
-        
-        self.delegate?.controllerWillEnlargePreview?(self)
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.layoutIfNeeded()
-            self.sheetCollectionView.collectionViewLayout.invalidateLayout()
-        }, completion: { _ in
-            self.delegate?.controllerDidEnlargePreview?(self)
-            
-            completion?()
-        })
-    }
-    
 }
 
 // MARK: - UICollection view 
@@ -366,13 +345,18 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard fetchResult != nil else { return 1 } // this is a camera }
-        return fetchResult.count
+        return fetchResult.count + 1
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = imagePickerCollectionCell(collectionView, indexPath: indexPath)
-        
-        return cell 
+        if indexPath.row == 0 {
+            let cell = imagePickerLiveCameraCollectionCell(collectionView, indexPath: indexPath)
+            return cell
+        } else {
+            let cell = imagePickerCollectionCell(collectionView, indexPath: indexPath)
+            
+            return cell
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath:
@@ -428,7 +412,7 @@ extension ImagePickerSheetController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerCollectionCellIdentifier, for: indexPath) as! ImagePickerCollectionCell
         
         guard fetchResult != nil else { return cell }
-        let asset = fetchResult.object(at: indexPath.row) //- 1)
+        let asset = fetchResult.object(at: indexPath.row - 1) //- 1) - 1 because camera view
         
         cell.representedAssetIdentifier = asset.localIdentifier
         imageManager.requestImage(for: asset, targetSize: CGSize(width: 95, height: 95), contentMode: .aspectFill, options: nil) { (image, info) in
