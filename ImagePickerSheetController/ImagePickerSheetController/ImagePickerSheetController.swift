@@ -65,6 +65,15 @@ open class ImagePickerSheetController: UIViewController {
         collectionView.register(PreviewCollectionViewCell.self, forCellWithReuseIdentifier: NSStringFromClass(PreviewCollectionViewCell.self))
         collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
         
+        // register cells
+        
+        let imagePickerCollectionCellIdentifier = "ImagePickerCollectionCell"
+        let imagePickerLiveCameraCollectionCellIdentifier = "ImagePickerLiveCameraCollectionCell"
+        let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
+        collectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
+        let liveNib = UINib(nibName: "ImagePickerLiveCameraCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
+        collectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
+        
         return collectionView
     }()
     
@@ -112,6 +121,11 @@ open class ImagePickerSheetController: UIViewController {
         
         return options
     }()
+    
+    // MARK: - CollectionView identifier
+    
+    fileprivate let imagePickerCollectionCellIdentifier = "ImagePickerCollectionCell"
+    fileprivate let imagePickerLiveCameraCollectionCellIdentifier = "ImagePickerLiveCameraCollectionCell"
     
     // MARK: - Data
     
@@ -405,19 +419,9 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(PreviewCollectionViewCell.self), for: indexPath) as! PreviewCollectionViewCell
+        let cell = imagePickerCollectionCell(collectionView, indexPath: indexPath)
         
-        let asset = fetchResult[indexPath.section]
-
-//        requestImageForAsset(asset) { image in
-//            cell.imageView.image = image
-//        }
-        
-        imageManager.requestImage(for: asset, targetSize: CGSize(width: 95, height: 95), contentMode: .aspectFill, options: nil) { (image, info) in
-                cell.imageView.image = image
-        }
-        
-        return cell
+        return cell 
     }
     
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath:
@@ -471,6 +475,33 @@ extension ImagePickerSheetController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let checkmarkWidth = PreviewSupplementaryView.checkmarkImage?.size.width ?? 0
         return CGSize(width: checkmarkWidth + 2 * previewCheckmarkInset, height: sheetController.previewHeight - 2 * previewInset)
+    }
+    
+}
+
+// MARK: - UICollectionView cells 
+
+extension ImagePickerSheetController {
+    
+    fileprivate func imagePickerCollectionCell(_ collectionView: UICollectionView, indexPath: IndexPath) -> ImagePickerCollectionCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerCollectionCellIdentifier, for: indexPath) as! ImagePickerCollectionCell
+        
+        guard fetchResult != nil else { return cell }
+        let asset = fetchResult.object(at: indexPath.section) //- 1)
+        
+        cell.representedAssetIdentifier = asset.localIdentifier
+        imageManager.requestImage(for: asset, targetSize: CGSize(width: 95, height: 95), contentMode: .aspectFill, options: nil) { (image, info) in
+            if cell.representedAssetIdentifier == asset.localIdentifier {
+                cell.photoImageView?.image = image
+            }
+        }
+        
+        return cell
+    }
+    
+    fileprivate func imagePickerLiveCameraCollectionCell(_ collectionView: UICollectionView, indexPath: IndexPath) -> ImagePickerLiveCameraCollectionCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier, for: indexPath) as! ImagePickerLiveCameraCollectionCell
+        return cell
     }
     
 }

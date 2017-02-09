@@ -47,11 +47,6 @@ class ViewController: UIViewController {
         let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
         controller.delegate = self
         
-        controller.addAction(ImagePickerAction(title: NSLocalizedString("Take Photo Or Video", comment: "Action Title"), secondaryTitle: NSLocalizedString("Add comment", comment: "Action Title"), handler: { _ in
-            presentImagePickerController(.camera)
-        }, secondaryHandler: { _, numberOfPhotos in
-            print("Comment \(numberOfPhotos) photos")
-        }))
         controller.addAction(ImagePickerAction(title: NSLocalizedString("Photo Library", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title") as NSString, $0) as String}, handler: { _ in
             presentImagePickerController(.photoLibrary)
         }, secondaryHandler: { _, numberOfPhotos in
