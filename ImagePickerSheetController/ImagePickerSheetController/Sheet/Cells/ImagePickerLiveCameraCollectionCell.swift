@@ -29,7 +29,7 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.8) { [weak self] in
             guard self != nil else { return }
             if !self!.cameraSession.isRunning {
                 self!.cameraSession.startRunning()
@@ -42,21 +42,12 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
 //        orientationDidChange()
 //        setupUIHierarchy()
       
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] (timer) in
-            guard self != nil else { return }
-//            self!.setupAVCapture()
-//            self!.setupViewSettings()
-//            self!.orientationDidChange()
-//            self!.setupUIHierarchy()
-//            if self!.cameraSession.isRunning == false {
-//                self!.cameraSession.startRunning()
-//            }
-        }
+
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        orientationDidChange()
+//        orientationDidChange()
     }
     
     func orientationDidChange() {
