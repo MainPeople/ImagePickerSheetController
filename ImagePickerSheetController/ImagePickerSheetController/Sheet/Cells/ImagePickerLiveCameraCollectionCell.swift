@@ -31,6 +31,12 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
         
         // Layer orientation
         orientationDidChange()
+        setupStartOrientation()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setupStartOrientation()
     }
     
     override func didMoveToSuperview() {
@@ -51,6 +57,10 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
             guard self != nil else { return }
             self!.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
         }
+    }
+    
+    private func setupStartOrientation() {
+        cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
     }
     
     private func setupUIHierarchy() {
