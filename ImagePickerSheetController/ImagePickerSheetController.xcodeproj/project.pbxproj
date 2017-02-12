@@ -56,6 +56,8 @@
 		A6B121E51E4CECD2001C19ED /* CameraEngineMetadataOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */; };
 		A6B121E61E4CECD2001C19ED /* CameraEngineVideoEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */; };
 		A6B121E71E4CECD2001C19ED /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A6B121DD1E4CECD2001C19ED /* Info.plist */; };
+		A6CE81541E50D48400C443B4 /* ImagePickerLiveCameraCollectionCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */; };
+		A6CE81551E50D4BF00C443B4 /* ImagePickerCollectionCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -502,6 +504,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6CE81551E50D4BF00C443B4 /* ImagePickerCollectionCell.xib in Sources */,
+				A6CE81541E50D48400C443B4 /* ImagePickerLiveCameraCollectionCell.xib in Sources */,
 				A6B121E11E4CECD2001C19ED /* CameraEngineDevice.swift in Sources */,
 				A6B121E21E4CECD2001C19ED /* CameraEngineDeviceInput.swift in Sources */,
 				4981CB041B8B246000A09750 /* PreviewCollectionViewCell.swift in Sources */,
