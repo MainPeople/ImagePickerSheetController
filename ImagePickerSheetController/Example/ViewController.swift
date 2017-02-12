@@ -38,29 +38,22 @@ class ViewController: UIViewController {
             var sourceType = source
             if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {
                 sourceType = .photoLibrary
-                print("Fallback to camera roll as a source since the simulator doesn't support taking pictures")
             }
             controller.sourceType = sourceType
             
             self.present(controller, animated: true, completion: nil)
         }
         
-        let imagePickerSheetController = ImagePickerSheetController(mediaType: .imageAndVideo)
+        let imagePickerSheetController = ImagePickerSheetController(mediaType: .image)
 
         imagePickerSheetController.delegate = self
         
-        imagePickerSheetController.addAction(ImagePickerAction(title: NSLocalizedString("Photo Library", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title") as NSString, $0) as String}, handler: { _ in
+        imagePickerSheetController.addAction(ImagePickerAction(title: NSLocalizedString("Choose Photo", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title") as NSString, $0) as String}, handler: { _ in
             presentImagePickerController(.photoLibrary)
         }, secondaryHandler: { _, numberOfPhotos in
             
         }))
         imagePickerSheetController.addAction(ImagePickerAction(cancelTitle: NSLocalizedString("Cancel", comment: "Action Title")))
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            imagePickerSheetController.modalPresentationStyle = .popover
-            imagePickerSheetController.popoverPresentationController?.sourceView = view
-            imagePickerSheetController.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize())
-        }
         
         present(imagePickerSheetController, animated: true, completion: nil)
     }

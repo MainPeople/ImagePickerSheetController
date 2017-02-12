@@ -165,8 +165,6 @@ open class ImagePickerSheetController: UIViewController {
             prepareAssets()
         } else {
             // for camera
-            previewPhotoCollectionView.reloadData()
-            
         }
     }
     
@@ -283,7 +281,7 @@ extension ImagePickerSheetController {
     }
     
     private func registerCollectionViewElements() {
-        previewPhotoCollectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
+//        previewPhotoCollectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
         // cells
         let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
         previewPhotoCollectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
@@ -319,17 +317,17 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath:
-        IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self), for: indexPath) as! PreviewSupplementaryView
-        view.isUserInteractionEnabled = false
-        view.buttonInset = UIEdgeInsetsMake(0.0, previewCheckmarkInset, previewCheckmarkInset, 0.0)
-        view.selected = selectedAssetIndices.contains(indexPath.section)
-        
-        supplementaryViews[indexPath.section] = view
-        
-        return view
-    }
+//    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath:
+//        IndexPath) -> UICollectionReusableView {
+//        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self), for: indexPath) as! PreviewSupplementaryView
+//        view.isUserInteractionEnabled = false
+//        view.buttonInset = UIEdgeInsetsMake(0.0, previewCheckmarkInset, previewCheckmarkInset, 0.0)
+//        view.selected = selectedAssetIndices.contains(indexPath.section)
+//        
+//        supplementaryViews[indexPath.section] = view
+//        
+//        return view
+//    }
     
 }
 
