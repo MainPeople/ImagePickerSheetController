@@ -27,8 +27,10 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
         // Initialization code
         setupAVCapture()
         setupViewSettings()
-        orientationDidChange()
         setupUIHierarchy()
+        
+        // Layer orientation
+        orientationDidChange()
     }
     
     override func didMoveToSuperview() {
@@ -39,30 +41,15 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
                 self!.cameraSession.startRunning()
             }
         }
-//        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] (timer) in
-//            guard self != nil else { return }
-//            if self!.cameraSession.isRunning == false {
-//                self!.cameraSession.startRunning()
-//            }
-//        }
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        orientationDidChange()
-    }
-    
-    func orientationDidChange() {
-        let orientation: UIDeviceOrientation = UIDevice.current.orientation
-        switch orientation {
-        case .portrait:
-            cameraLayer.connection.videoOrientation = .portrait
-        case .landscapeRight:
-            cameraLayer.connection.videoOrientation = .landscapeLeft
-        case .landscapeLeft:
-            cameraLayer.connection.videoOrientation = .landscapeRight
-        default:
-            cameraLayer.connection.videoOrientation = .portrait
+    private func orientationDidChange() {
+        if (!UIDevice.current.isGeneratingDeviceOrientationNotifications) {
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: OperationQueue.main) { [weak self] (_) -> Void in
+            guard self != nil else { return }
+            self!.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
         }
     }
     

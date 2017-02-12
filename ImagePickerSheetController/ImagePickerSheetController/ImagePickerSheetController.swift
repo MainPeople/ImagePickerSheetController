@@ -156,14 +156,6 @@ open class ImagePickerSheetController: UIViewController {
     
     // MARK: - View Lifecycle
     
-//    override open func loadView() {
-//        super.loadView()
-//        
-//        view.addSubview(backgroundView)
-//        view.addSubview(sheetCollectionView)
-//        
-//    }
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
         // UI
