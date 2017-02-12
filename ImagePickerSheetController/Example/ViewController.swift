@@ -30,10 +30,6 @@ class ViewController: UIViewController {
     
     // MARK: - Other Methods
     
-//    private lazy var imagePickerSheetController: ImagePickerSheetController = {
-//        let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
-//        return controller
-//    }()
     
     func presentImagePickerSheet(_ gestureRecognizer: UITapGestureRecognizer) {
         let presentImagePickerController: (UIImagePickerControllerSourceType) -> () = { source in

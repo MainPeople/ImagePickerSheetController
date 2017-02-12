@@ -150,6 +150,7 @@ open class ImagePickerSheetController: UIViewController {
     }
     
     deinit {
+        debugPrint("ImagePickerSheetController is deinit")
         NotificationCenter.default.removeObserver(sheetController, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
