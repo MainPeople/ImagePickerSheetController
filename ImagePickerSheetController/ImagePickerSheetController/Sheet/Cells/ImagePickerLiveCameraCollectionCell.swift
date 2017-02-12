@@ -18,12 +18,24 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     fileprivate var cameraLayer = AVCaptureVideoPreviewLayer()
     
 
+    private let cameraEngine = CameraEngine()
+    
+
     deinit {
         cameraSession.stopRunning()
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        cameraEngine.startSession()
+        cameraEngine.rotationCamera = true
+//        cameraEngine.currentDevice = .front
+        
+        cameraEngine.previewLayer.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
+        
+        containerView.layer.addSublayer(cameraEngine.previewLayer)
+        
         // Initialization code
         setupAVCapture()
         setupViewSettings()
@@ -35,12 +47,12 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard self != nil else { return }
-            if self!.cameraSession.isRunning == false {
-                self!.cameraSession.startRunning()
-            }
-        }
+//        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) { [weak self] in
+//            guard self != nil else { return }
+//            if self!.cameraSession.isRunning == false {
+//                self!.cameraSession.startRunning()
+//            }
+//        }
     }
     
     private func orientationDidChange() {
