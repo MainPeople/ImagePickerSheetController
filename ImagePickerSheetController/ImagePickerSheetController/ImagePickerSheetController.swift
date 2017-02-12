@@ -109,6 +109,10 @@ open class ImagePickerSheetController: UIViewController {
     
     fileprivate let imageManager = PHCachingImageManager()
     
+    // MARK: - Camera Engine 
+    
+    fileprivate var cameraEngine = CameraEngine()
+    fileprivate var cameraLayerReplicate: CAReplicatorLayer!
     
     /// Whether the image preview has been elarged. This is the case when at least once
     /// image has been selected.
@@ -147,19 +151,16 @@ open class ImagePickerSheetController: UIViewController {
         NotificationCenter.default.removeObserver(sheetController, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
-    // MARK: - Camera engine 
-    
-    fileprivate var cameraEngine = CameraEngine()
-    
     // MARK: - View Lifecycle
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        cameraEngine.startSession()
         // UI
         addUIElements()
         // Collection view
         setupCollectionViewSettings()
-        // Camera engine 
+        // Camera
         setupCameraEngineSettings()
     }
     
@@ -239,6 +240,8 @@ open class ImagePickerSheetController: UIViewController {
             allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             fetchResult = PHAsset.fetchAssets(with: .image, options: allPhotosOptions)
         }
+        
+        previewPhotoCollectionView.reloadData()
     }
     
     // MARK: - Layout
@@ -383,6 +386,8 @@ extension ImagePickerSheetController {
     
     fileprivate func imagePickerLiveCameraCollectionCell(_ collectionView: UICollectionView, indexPath: IndexPath) -> ImagePickerLiveCameraCollectionCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier, for: indexPath) as! ImagePickerLiveCameraCollectionCell
+        
+        cell.cameraEngineLayer = cameraLayerReplicate
         return cell
     }
     
@@ -407,35 +412,43 @@ extension ImagePickerSheetController: UIViewControllerTransitioningDelegate {
 extension ImagePickerSheetController {
     
     fileprivate func setupCameraEngineSettings() {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            self?.cameraEngine.startSession()
-        }
+        cameraEngine.currentDevice = .front
+        cameraEngine.rotationCamera = true
+        
+        guard cameraEngine.previewLayer != nil else { return }
+        cameraLayerReplicate = CAReplicatorLayer(layer: cameraEngine.previewLayer)
+        cameraLayerReplicate.instanceCount = 2
+        cameraLayerReplicate.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
     }
-   
     
     fileprivate func presentCameraController() {
+        if cameraEngine.session.isRunning {
+            debugPrint("cameraEngine.session.isRunning")
+        } else {
+            debugPrint("cameraEngine.session.isRunning false")
+        }
+        
         guard let cell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
+        debugPrint("cell sublyaer before", cell.layer.sublayers?.count ?? "nil")
+
         
         cell.heroID = "LiveCamera"
         
-        let cameraController = CameraViewController()
-        cameraController.cameraEngine = self.cameraEngine
-
-        if cameraController.cameraEngine != nil {
-            debugPrint("cameraEngine != nil")
-        } else {
-            debugPrint("camera engine == nil")
-        }
-        
+        let cameraController = UIViewController()
+        cameraController.view.backgroundColor = .green
         cameraController.view.heroID = "LiveCamera"
         cameraController.isHeroEnabled = true
         
-//        present(testController, animated: true, completion: nil)
-        present(cameraController, animated: true) { 
+        present(cameraController, animated: true) {
             Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-                cameraController.hero_dismissViewController()
+//                cameraController.hero_dismissViewController()
+                cameraController.dismiss(animated: true, completion: nil)
             })
         }
+        
+        cell.heroID = nil
+        
+        debugPrint("cell sublyaer after", cell.layer.sublayers?.count ?? "nil")
     }
     
 }

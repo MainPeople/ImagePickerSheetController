@@ -14,127 +14,61 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     @IBOutlet fileprivate weak var containerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     
-    fileprivate let cameraSession = AVCaptureSession()
-    fileprivate var cameraLayer = AVCaptureVideoPreviewLayer()
+    
+    var cameraEngineLayer: CAReplicatorLayer!
     
 
     deinit {
-        cameraSession.stopRunning()
+//        cameraSession.stopRunning()
         NotificationCenter.default.removeObserver(self)
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        setupAVCapture()
         setupViewSettings()
-        setupUIHierarchy()
-        
-        // Layer orientation
-        orientationDidChange()
-        setupStartOrientation()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        setupStartOrientation()
+        addCameraEngineLayer()
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard self != nil else { return }
-            if self!.cameraSession.isRunning == false {
-                self!.cameraSession.startRunning()
-            }
+        for sublayer in containerView.layer.sublayers! {
+            debugPrint("sublayer", sublayer)
         }
     }
     
-    private func orientationDidChange() {
-        if (!UIDevice.current.isGeneratingDeviceOrientationNotifications) {
-            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+
+    private func addCameraEngineLayer() {
+        guard cameraEngineLayer != nil else {
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { [weak self] (timer) in
+                self?.addCameraEngineLayer()
+                debugPrint("add camera layer = false")
+            })
+            return
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: OperationQueue.main) { [weak self] (_) -> Void in
-            guard self != nil else { return }
-            self!.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
-        }
+        cameraEngineLayer.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
+        cameraEngineLayer.position = CGPoint(x: 0, y: 0)
+        cameraEngineLayer.contentsCenter = CGRect(x: 0, y: 0, width: 95, height: 95)
+        
+        containerView.layer.addSublayer(cameraEngineLayer)
+        debugPrint("add camera layer")
     }
+
     
-    private func setupStartOrientation() {
-        cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
-    }
-    
-    private func setupUIHierarchy() {
-        containerView.bringSubview(toFront: imageView)
-    }
+  
     
 }
 
 
 extension ImagePickerLiveCameraCollectionCell:  AVCaptureVideoDataOutputSampleBufferDelegate{
     
-    func setupAVCapture(){
-        cameraSession.sessionPreset = AVCaptureSessionPresetHigh
-        
-        let captureDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .front) as AVCaptureDevice
-        
-        beginSession(captureDevice)
-        
-        setupLayer()
-    }
-    
-    private func beginSession(_ captureDevice: AVCaptureDevice) {
-        var deviceInput: AVCaptureDeviceInput!
-        
-        do {
-            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-        } catch {
-            debugPrint(error.localizedDescription)
-        }
-        
-        guard deviceInput != nil else { return }
-        
-        if cameraSession.canAddInput(deviceInput) {
-            cameraSession.addInput(deviceInput)
-        }
-        
-        let dataOutput = AVCaptureVideoDataOutput()
-        
-        dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)]
-        
-        dataOutput.alwaysDiscardsLateVideoFrames = true
-        
-        
-        if cameraSession.canAddOutput(dataOutput) {
-            cameraSession.addOutput(dataOutput)
-        }
-        
-        cameraSession.commitConfiguration()
-        
-//        Timer.scheduledTimer(withTimeInterval: 0.001, repeats: false) { [weak self] (timer) in
-//            self?.cameraSession.startRunning()
-//        }
-//        
-//        cameraSession.startRunning()
-        
-//        let queue = DispatchQueue(label: "com.invasivecode.videoQueue") 
-//        dataOutput.setSampleBufferDelegate(self, queue: queue)
-    }
-    
-    private func setupLayer() {
-        cameraLayer = AVCaptureVideoPreviewLayer(session: cameraSession)
-        cameraLayer.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
-        cameraLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        containerView.layer.addSublayer(cameraLayer)
-    }
-    
     fileprivate func setupViewSettings() {
         containerView.layer.cornerRadius = 7
         containerView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 7
         contentView.layer.masksToBounds = true
-        cameraLayer.cornerRadius = 7
-        cameraLayer.masksToBounds = true
+//        cameraLayer.cornerRadius = 7
+//        cameraLayer.masksToBounds = true
     }
     
 }
