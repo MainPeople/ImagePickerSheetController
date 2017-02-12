@@ -20,6 +20,7 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
 
     deinit {
         cameraSession.stopRunning()
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func awakeFromNib() {

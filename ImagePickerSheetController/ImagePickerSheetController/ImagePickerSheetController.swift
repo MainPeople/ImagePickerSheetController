@@ -94,14 +94,7 @@ open class ImagePickerSheetController: UIViewController {
     
     /// The media type of the displayed assets
     open let mediaType: ImagePickerMediaType
-    
-    fileprivate lazy var requestOptions: PHImageRequestOptions = {
-        let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        options.resizeMode = .fast
-        
-        return options
-    }()
+
     
     // MARK: - CollectionView identifier
     
@@ -166,11 +159,14 @@ open class ImagePickerSheetController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         preferredContentSize = CGSize(width: 400, height: view.frame.height)
         
         if PHPhotoLibrary.authorizationStatus() == .authorized {
             prepareAssets()
+        } else {
+            // for camera
+            previewPhotoCollectionView.reloadData()
+            
         }
     }
     
@@ -259,7 +255,6 @@ open class ImagePickerSheetController: UIViewController {
             backgroundView.frame = view.bounds
         }
         
-//        reloadMaximumPreviewHeight()
         reloadCurrentPreviewHeight(invalidateLayout: true)
         
         let sheetHeight = sheetController.preferredSheetHeight
@@ -296,11 +291,6 @@ extension ImagePickerSheetController {
         previewPhotoCollectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
     }
     
-//    fileprivate func changeVideoOrientation(_ size: CGSize) {
-//        guard let cameraCell = collectionView.visibleCells.first as? ImagePickerLiveCameraCollectionCell else { return }
-//        cameraCell.orientationDidChange()
-//    }
-    
     
 }
 
@@ -309,8 +299,8 @@ extension ImagePickerSheetController {
 extension ImagePickerSheetController: UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard fetchResult != nil else { return 0 }
-        return 1 //fetchResult.count
+        guard fetchResult != nil else { return 1 }
+        return 1
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -348,7 +338,8 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
 extension ImagePickerSheetController: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    
+        debugPrint("didSelectItemAt")
+        
         
 //        delegate?.controller?(self, didSelectAsset: selectedAsset)
     }
