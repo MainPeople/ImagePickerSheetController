@@ -82,6 +82,7 @@
 		A6CE818D1E50F99700C443B4 /* MatchPreprocessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CE81731E50F99700C443B4 /* MatchPreprocessor.swift */; };
 		A6CE818E1E50F99700C443B4 /* SourcePreprocessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CE81741E50F99700C443B4 /* SourcePreprocessor.swift */; };
 		A6CE818F1E50F99700C443B4 /* UIKit+Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CE81751E50F99700C443B4 /* UIKit+Hero.swift */; };
+		A6CE81921E50FE4700C443B4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CE81911E50FE4700C443B4 /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,6 +213,7 @@
 		A6CE81731E50F99700C443B4 /* MatchPreprocessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchPreprocessor.swift; sourceTree = "<group>"; };
 		A6CE81741E50F99700C443B4 /* SourcePreprocessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePreprocessor.swift; sourceTree = "<group>"; };
 		A6CE81751E50F99700C443B4 /* UIKit+Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Hero.swift"; sourceTree = "<group>"; };
+		A6CE81911E50FE4700C443B4 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +296,7 @@
 		49DC4A531B14F1BC00B4E78E /* ImagePickerSheetController */ = {
 			isa = PBXGroup;
 			children = (
+				A6CE81901E50FE2300C443B4 /* CameraController */,
 				A6CE815B1E50F95B00C443B4 /* Hero */,
 				A6B121D31E4CEC98001C19ED /* CameraEngine */,
 				49DC4A6E1B14F1F600B4E78E /* ImagePickerAction.swift */,
@@ -431,6 +434,14 @@
 				A6CE81751E50F99700C443B4 /* UIKit+Hero.swift */,
 			);
 			path = Hero;
+			sourceTree = "<group>";
+		};
+		A6CE81901E50FE2300C443B4 /* CameraController */ = {
+			isa = PBXGroup;
+			children = (
+				A6CE81911E50FE4700C443B4 /* CameraViewController.swift */,
+			);
+			path = CameraController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -618,6 +629,7 @@
 				A6CE81771E50F99700C443B4 /* BasePreprocessor.swift in Sources */,
 				A6CE818C1E50F99700C443B4 /* IgnoreSubviewModifiersPreprocessor.swift in Sources */,
 				A6CE81821E50F99700C443B4 /* HeroDebugView.swift in Sources */,
+				A6CE81921E50FE4700C443B4 /* CameraViewController.swift in Sources */,
 				49665AD71B8F2DC6005AA666 /* SheetController.swift in Sources */,
 				499E65CF1B8E317C005B807F /* SheetCollectionViewLayout.swift in Sources */,
 				A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */,

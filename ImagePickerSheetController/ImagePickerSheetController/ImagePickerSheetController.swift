@@ -147,6 +147,10 @@ open class ImagePickerSheetController: UIViewController {
         NotificationCenter.default.removeObserver(sheetController, name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
+    // MARK: - Camera engine 
+    
+    fileprivate var cameraEngine = CameraEngine()
+    
     // MARK: - View Lifecycle
     
     override open func viewDidLoad() {
@@ -155,6 +159,8 @@ open class ImagePickerSheetController: UIViewController {
         addUIElements()
         // Collection view
         setupCollectionViewSettings()
+        // Camera engine 
+        setupCameraEngineSettings()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -317,17 +323,6 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
         }
     }
     
-//    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath:
-//        IndexPath) -> UICollectionReusableView {
-//        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self), for: indexPath) as! PreviewSupplementaryView
-//        view.isUserInteractionEnabled = false
-//        view.buttonInset = UIEdgeInsetsMake(0.0, previewCheckmarkInset, previewCheckmarkInset, 0.0)
-//        view.selected = selectedAssetIndices.contains(indexPath.section)
-//        
-//        supplementaryViews[indexPath.section] = view
-//        
-//        return view
-//    }
     
 }
 
@@ -337,7 +332,10 @@ extension ImagePickerSheetController: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         debugPrint("didSelectItemAt")
-        
+        if indexPath.row == 0 {
+            // this is a camera cell 
+            presentCameraController()
+        }
         
 //        delegate?.controller?(self, didSelectAsset: selectedAsset)
     }
@@ -400,6 +398,44 @@ extension ImagePickerSheetController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return AnimationController(imagePickerSheetController: self, presenting: false)
+    }
+    
+}
+
+// MARK: - Camera controller
+
+extension ImagePickerSheetController {
+    
+    fileprivate func setupCameraEngineSettings() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.cameraEngine.startSession()
+        }
+    }
+   
+    
+    fileprivate func presentCameraController() {
+        guard let cell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
+        
+        cell.heroID = "LiveCamera"
+        
+        let cameraController = CameraViewController()
+        cameraController.cameraEngine = self.cameraEngine
+
+        if cameraController.cameraEngine != nil {
+            debugPrint("cameraEngine != nil")
+        } else {
+            debugPrint("camera engine == nil")
+        }
+        
+        cameraController.view.heroID = "LiveCamera"
+        cameraController.isHeroEnabled = true
+        
+//        present(testController, animated: true, completion: nil)
+        present(cameraController, animated: true) { 
+            Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+                cameraController.hero_dismissViewController()
+            })
+        }
     }
     
 }
