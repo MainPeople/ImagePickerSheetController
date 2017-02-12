@@ -93,7 +93,7 @@ Pod::Spec.new do |s|
 
   s.resource  = "ImagePickerSheetController/ImagePickerSheetController/Images.xcassets"
   # s.resources = "Resources/*.png"
-  # s.resource_bundle = {"Images" => ["ImagePickerSheetController/ImagePickerSheetController/Images.xcassets"]}
+  # s.resource_bundle = {"Images" => ["ImagePickerSheetController/ImagePickerSheetController/Images.xcassets", "ImagePickerSheetController/ImagePickerSheetController/ImagePickerSheetController/Sheet/Cells/ImagePickerCollectionCell.xib", "ImagePickerSheetController/ImagePickerSheetController/ImagePickerSheetController/Sheet/Cells/ImagePickerLiveCameraCollectionCell.xib"]}
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
