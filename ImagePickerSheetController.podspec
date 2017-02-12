@@ -56,10 +56,10 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "10.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
   # s.osx.deployment_target = "10.7"
 
 
@@ -94,6 +94,9 @@ Pod::Spec.new do |s|
   s.resource  = "ImagePickerSheetController/ImagePickerSheetController/Images.xcassets"
   # s.resources = "Resources/*.png"
   # s.resource_bundle = {"Images" => ["ImagePickerSheetController/ImagePickerSheetController/Images.xcassets"]}
+
+  s.resources = "ImagePickerSheetController/**/*.{png,jpeg,jpg,storyboard,xib}"
+
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 

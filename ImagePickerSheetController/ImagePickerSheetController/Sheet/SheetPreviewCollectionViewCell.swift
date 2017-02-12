@@ -10,21 +10,27 @@ import UIKit
 
 class SheetPreviewCollectionViewCell: SheetCollectionViewCell {
     
-    var collectionView: PreviewCollectionView? {
+    var collectionView: UICollectionView? {
         willSet {
             if let collectionView = collectionView {
                 collectionView.removeFromSuperview()
             }
             
             if let collectionView = newValue {
+                collectionView.translatesAutoresizingMaskIntoConstraints = false
                 addSubview(collectionView)
             }
         }
     }
     
+    // MARK: - Flags
+    
+    private var isDidSetupConstraints = false
+    
     // MARK: - Other Methods
     
     override func prepareForReuse() {
+        isDidSetupConstraints = false 
         collectionView = nil
     }
     
@@ -32,8 +38,18 @@ class SheetPreviewCollectionViewCell: SheetCollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        collectionView?.frame = UIEdgeInsetsInsetRect(bounds, backgroundInsets)
+        setupUIElementsPositions()
+//        collectionView?.frame = UIEdgeInsetsInsetRect(bounds, backgroundInsets)
+    }
+    
+    private func setupUIElementsPositions() {
+        if isDidSetupConstraints == false {
+            collectionView?.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+            collectionView?.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+            collectionView?.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+            collectionView?.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            isDidSetupConstraints = true
+        }
     }
     
 }

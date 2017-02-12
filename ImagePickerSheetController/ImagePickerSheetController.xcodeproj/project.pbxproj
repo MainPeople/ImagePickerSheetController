@@ -34,7 +34,6 @@
 		49DC4A751B14F1F600B4E78E /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DC4A6D1B14F1F600B4E78E /* AnimationController.swift */; };
 		49DC4A761B14F1F600B4E78E /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DC4A6E1B14F1F600B4E78E /* ImagePickerAction.swift */; };
 		49DC4A7E1B14F22200B4E78E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49DC4A7D1B14F22200B4E78E /* Images.xcassets */; };
-		49DC4A801B14F2EF00B4E78E /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DC4A7F1B14F2EF00B4E78E /* Photos.framework */; };
 		49DC4A8B1B14F31500B4E78E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DC4A8A1B14F31500B4E78E /* AppDelegate.swift */; };
 		49DC4A8D1B14F31500B4E78E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DC4A8C1B14F31500B4E78E /* ViewController.swift */; };
 		49DC4A951B14F31500B4E78E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DC4A931B14F31500B4E78E /* LaunchScreen.xib */; };
@@ -43,6 +42,20 @@
 		49DC4AAF1B14FB9A00B4E78E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */; };
 		49F3118A1B15074100ACD6A7 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 49F3118C1B15074100ACD6A7 /* Localizable.stringsdict */; };
 		49F3118D1B15074400ACD6A7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49F3118F1B15074400ACD6A7 /* Localizable.strings */; };
+		A6B121B91E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */; };
+		A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */; };
+		A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */; };
+		A6B121BC1E4C930F001C19ED /* ImagePickerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */; };
+		A6B121DE1E4CECD2001C19ED /* CameraEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = A6B121D41E4CECD2001C19ED /* CameraEngine.h */; };
+		A6B121DF1E4CECD2001C19ED /* CameraEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D51E4CECD2001C19ED /* CameraEngine.swift */; };
+		A6B121E01E4CECD2001C19ED /* CameraEngineCaptureOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D61E4CECD2001C19ED /* CameraEngineCaptureOutput.swift */; };
+		A6B121E11E4CECD2001C19ED /* CameraEngineDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D71E4CECD2001C19ED /* CameraEngineDevice.swift */; };
+		A6B121E21E4CECD2001C19ED /* CameraEngineDeviceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D81E4CECD2001C19ED /* CameraEngineDeviceInput.swift */; };
+		A6B121E31E4CECD2001C19ED /* CameraEngineFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121D91E4CECD2001C19ED /* CameraEngineFileManager.swift */; };
+		A6B121E41E4CECD2001C19ED /* CameraEngineGifEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DA1E4CECD2001C19ED /* CameraEngineGifEncoder.swift */; };
+		A6B121E51E4CECD2001C19ED /* CameraEngineMetadataOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */; };
+		A6B121E61E4CECD2001C19ED /* CameraEngineVideoEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */; };
+		A6B121E71E4CECD2001C19ED /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A6B121DD1E4CECD2001C19ED /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +146,20 @@
 		49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		49F3118B1B15074100ACD6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		49F3118E1B15074400ACD6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerLiveCameraCollectionCell.swift; sourceTree = "<group>"; };
+		A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerLiveCameraCollectionCell.xib; sourceTree = "<group>"; };
+		A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCollectionCell.swift; sourceTree = "<group>"; };
+		A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerCollectionCell.xib; sourceTree = "<group>"; };
+		A6B121D41E4CECD2001C19ED /* CameraEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraEngine.h; sourceTree = "<group>"; };
+		A6B121D51E4CECD2001C19ED /* CameraEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngine.swift; sourceTree = "<group>"; };
+		A6B121D61E4CECD2001C19ED /* CameraEngineCaptureOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineCaptureOutput.swift; sourceTree = "<group>"; };
+		A6B121D71E4CECD2001C19ED /* CameraEngineDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineDevice.swift; sourceTree = "<group>"; };
+		A6B121D81E4CECD2001C19ED /* CameraEngineDeviceInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineDeviceInput.swift; sourceTree = "<group>"; };
+		A6B121D91E4CECD2001C19ED /* CameraEngineFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineFileManager.swift; sourceTree = "<group>"; };
+		A6B121DA1E4CECD2001C19ED /* CameraEngineGifEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineGifEncoder.swift; sourceTree = "<group>"; };
+		A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineMetadataOutput.swift; sourceTree = "<group>"; };
+		A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraEngineVideoEncoder.swift; sourceTree = "<group>"; };
+		A6B121DD1E4CECD2001C19ED /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +167,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49DC4A801B14F2EF00B4E78E /* Photos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,6 +196,7 @@
 		4981CAFC1B8B246000A09750 /* Sheet */ = {
 			isa = PBXGroup;
 			children = (
+				A6B121B41E4C92CC001C19ED /* Cells */,
 				49665AD61B8F2DC6005AA666 /* SheetController.swift */,
 				499E65CE1B8E317C005B807F /* SheetCollectionViewLayout.swift */,
 				4981CB081B8B255A00A09750 /* SheetCollectionViewCell.swift */,
@@ -215,6 +242,7 @@
 		49DC4A531B14F1BC00B4E78E /* ImagePickerSheetController */ = {
 			isa = PBXGroup;
 			children = (
+				A6B121D31E4CEC98001C19ED /* CameraEngine */,
 				49DC4A6E1B14F1F600B4E78E /* ImagePickerAction.swift */,
 				49DC4A6D1B14F1F600B4E78E /* AnimationController.swift */,
 				494B3B701B8EF3CB004B467C /* ImagePickerSheetController.swift */,
@@ -291,6 +319,34 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A6B121B41E4C92CC001C19ED /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */,
+				A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */,
+				A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */,
+				A6B121B81E4C930F001C19ED /* ImagePickerCollectionCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A6B121D31E4CEC98001C19ED /* CameraEngine */ = {
+			isa = PBXGroup;
+			children = (
+				A6B121D41E4CECD2001C19ED /* CameraEngine.h */,
+				A6B121D51E4CECD2001C19ED /* CameraEngine.swift */,
+				A6B121D61E4CECD2001C19ED /* CameraEngineCaptureOutput.swift */,
+				A6B121D71E4CECD2001C19ED /* CameraEngineDevice.swift */,
+				A6B121D81E4CECD2001C19ED /* CameraEngineDeviceInput.swift */,
+				A6B121D91E4CECD2001C19ED /* CameraEngineFileManager.swift */,
+				A6B121DA1E4CECD2001C19ED /* CameraEngineGifEncoder.swift */,
+				A6B121DB1E4CECD2001C19ED /* CameraEngineMetadataOutput.swift */,
+				A6B121DC1E4CECD2001C19ED /* CameraEngineVideoEncoder.swift */,
+				A6B121DD1E4CECD2001C19ED /* Info.plist */,
+			);
+			path = CameraEngine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -299,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49DC4A571B14F1BC00B4E78E /* ImagePickerSheetController.h in Headers */,
+				A6B121DE1E4CECD2001C19ED /* CameraEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,14 +431,18 @@
 				TargetAttributes = {
 					49DC4A501B14F1BC00B4E78E = {
 						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 0800;
 					};
 					49DC4A5B1B14F1BC00B4E78E = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 35L77VM7C3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 49DC4A851B14F31500B4E78E;
 					};
 					49DC4A851B14F31500B4E78E = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 5953RHWYWT;
+						DevelopmentTeam = 35L77VM7C3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -410,6 +471,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6B121E71E4CECD2001C19ED /* Info.plist in Resources */,
+				A6B121BC1E4C930F001C19ED /* ImagePickerCollectionCell.xib in Resources */,
+				A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */,
 				49DC4A7E1B14F22200B4E78E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,17 +502,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6B121E11E4CECD2001C19ED /* CameraEngineDevice.swift in Sources */,
+				A6B121E21E4CECD2001C19ED /* CameraEngineDeviceInput.swift in Sources */,
 				4981CB041B8B246000A09750 /* PreviewCollectionViewCell.swift in Sources */,
+				A6B121E61E4CECD2001C19ED /* CameraEngineVideoEncoder.swift in Sources */,
 				49DC4A751B14F1F600B4E78E /* AnimationController.swift in Sources */,
+				A6B121DF1E4CECD2001C19ED /* CameraEngine.swift in Sources */,
 				4981CB061B8B246000A09750 /* PreviewCollectionViewLayout.swift in Sources */,
+				A6B121E31E4CECD2001C19ED /* CameraEngineFileManager.swift in Sources */,
 				49DC4A761B14F1F600B4E78E /* ImagePickerAction.swift in Sources */,
+				A6B121E41E4CECD2001C19ED /* CameraEngineGifEncoder.swift in Sources */,
 				494B3B711B8EF3CB004B467C /* ImagePickerSheetController.swift in Sources */,
 				49665AD71B8F2DC6005AA666 /* SheetController.swift in Sources */,
 				499E65CF1B8E317C005B807F /* SheetCollectionViewLayout.swift in Sources */,
+				A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */,
 				4981CB031B8B246000A09750 /* SheetPreviewCollectionViewCell.swift in Sources */,
 				4981CB091B8B255A00A09750 /* SheetCollectionViewCell.swift in Sources */,
+				A6B121E51E4CECD2001C19ED /* CameraEngineMetadataOutput.swift in Sources */,
 				4981CB071B8B246000A09750 /* PreviewSupplementaryView.swift in Sources */,
 				4981CB051B8B246000A09750 /* PreviewCollectionView.swift in Sources */,
+				A6B121B91E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift in Sources */,
+				A6B121E01E4CECD2001C19ED /* CameraEngineCaptureOutput.swift in Sources */,
 				4944CA851B8DB7F3007EA349 /* SheetActionCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,7 +638,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -608,7 +682,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -630,12 +704,12 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ImagePickerSheetController/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCImagePickerSheetController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -650,12 +724,12 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = ImagePickerSheetController/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SCImagePickerSheetController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -663,7 +737,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/iOS";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -674,7 +748,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
@@ -683,14 +757,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/iOS";
 				INFOPLIST_FILE = ImagePickerSheetControllerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
@@ -701,17 +775,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -721,13 +796,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 35L77VM7C3;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.laurinbrandner.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.imagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
