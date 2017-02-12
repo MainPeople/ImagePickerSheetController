@@ -18,6 +18,10 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     fileprivate var cameraLayer = AVCaptureVideoPreviewLayer()
     
 
+    deinit {
+        cameraSession.stopRunning()
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -35,7 +39,6 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
                 self!.cameraSession.startRunning()
             }
         }
-      
     }
     
     override func prepareForReuse() {

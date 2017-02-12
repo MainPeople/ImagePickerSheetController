@@ -30,6 +30,11 @@ class ViewController: UIViewController {
     
     // MARK: - Other Methods
     
+//    private lazy var imagePickerSheetController: ImagePickerSheetController = {
+//        let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
+//        return controller
+//    }()
+    
     func presentImagePickerSheet(_ gestureRecognizer: UITapGestureRecognizer) {
         let presentImagePickerController: (UIImagePickerControllerSourceType) -> () = { source in
             let controller = UIImagePickerController()
@@ -44,23 +49,24 @@ class ViewController: UIViewController {
             self.present(controller, animated: true, completion: nil)
         }
         
-        let controller = ImagePickerSheetController(mediaType: .imageAndVideo)
-        controller.delegate = self
+        let imagePickerSheetController = ImagePickerSheetController(mediaType: .imageAndVideo)
+
+        imagePickerSheetController.delegate = self
         
-        controller.addAction(ImagePickerAction(title: NSLocalizedString("Photo Library", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title") as NSString, $0) as String}, handler: { _ in
+        imagePickerSheetController.addAction(ImagePickerAction(title: NSLocalizedString("Photo Library", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title") as NSString, $0) as String}, handler: { _ in
             presentImagePickerController(.photoLibrary)
         }, secondaryHandler: { _, numberOfPhotos in
             
         }))
-        controller.addAction(ImagePickerAction(cancelTitle: NSLocalizedString("Cancel", comment: "Action Title")))
+        imagePickerSheetController.addAction(ImagePickerAction(cancelTitle: NSLocalizedString("Cancel", comment: "Action Title")))
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            controller.modalPresentationStyle = .popover
-            controller.popoverPresentationController?.sourceView = view
-            controller.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize())
+            imagePickerSheetController.modalPresentationStyle = .popover
+            imagePickerSheetController.popoverPresentationController?.sourceView = view
+            imagePickerSheetController.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize())
         }
         
-        present(controller, animated: true, completion: nil)
+        present(imagePickerSheetController, animated: true, completion: nil)
     }
     
 }

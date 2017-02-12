@@ -40,6 +40,10 @@ class SheetController: NSObject {
             .reduce(0, +)
     }
     
+    deinit {
+        debugPrint("sheet controller is deinit")
+    }
+    
     // MARK: - Initialization
     
     init(previewCollectionView: UICollectionView) {

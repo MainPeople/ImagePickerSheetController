@@ -40,7 +40,8 @@ open class ImagePickerSheetController: UIViewController {
             self?.dismiss(animated: true, completion: { _ in
                 // Possible retain cycle when action handlers hold a reference to the IPSC
                 // Remove all actions to break it
-                controller.removeAllActions()
+                // TODO: - memory leaks
+//                controller.removeAllActions()
             })
         }
         
@@ -62,30 +63,6 @@ open class ImagePickerSheetController: UIViewController {
         return collectionView
     }()
     
-//    fileprivate(set) lazy var previewCollectionView: PreviewCollectionView = {
-//        let collectionView = PreviewCollectionView()
-//        collectionView.accessibilityIdentifier = "ImagePickerSheetPreview"
-//        collectionView.backgroundColor = .clear
-//        collectionView.allowsMultipleSelection = true
-//        collectionView.imagePreviewLayout.sectionInset = UIEdgeInsets(top: previewInset, left: previewInset, bottom: previewInset, right: previewInset) // previewInset
-//        collectionView.imagePreviewLayout.showsSupplementaryViews = false
-//        collectionView.dataSource = self
-//        collectionView.delegate = self
-//        collectionView.showsHorizontalScrollIndicator = false
-//        collectionView.alwaysBounceHorizontal = true
-//        collectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
-//        
-//        // register cells
-//        
-//        let imagePickerCollectionCellIdentifier = "ImagePickerCollectionCell"
-//        let imagePickerLiveCameraCollectionCellIdentifier = "ImagePickerLiveCameraCollectionCell"
-//        let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
-//        collectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
-//        let liveNib = UINib(nibName: "ImagePickerLiveCameraCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
-//        collectionView.register(liveNib, forCellWithReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier)
-//        
-//        return collectionView
-//    }()
     
     fileprivate var supplementaryViews = [Int: PreviewSupplementaryView]()
     
