@@ -33,12 +33,18 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] (timer) in
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.1) { [weak self] in
             guard self != nil else { return }
             if self!.cameraSession.isRunning == false {
                 self!.cameraSession.startRunning()
             }
         }
+//        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { [weak self] (timer) in
+//            guard self != nil else { return }
+//            if self!.cameraSession.isRunning == false {
+//                self!.cameraSession.startRunning()
+//            }
+//        }
     }
     
     override func prepareForReuse() {
