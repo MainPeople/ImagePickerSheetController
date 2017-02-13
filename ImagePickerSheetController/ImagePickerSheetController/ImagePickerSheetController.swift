@@ -440,19 +440,12 @@ extension ImagePickerSheetController: UIViewControllerTransitioningDelegate {
 extension ImagePickerSheetController {
     
     fileprivate func presentCameraController() {
-        guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
-        
-        guard cameraLiveCell.containerView.layer.sublayers != nil else { return }
-        
-        for sublayer in cameraLiveCell.containerView.layer.sublayers! {
-            if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
-
-                let cameraController = CameraControllerViewController()
-                cameraController.cameraLayer = sublayer as! AVCaptureVideoPreviewLayer
+        let cameraController = CameraControllerViewController()
+        cameraController.cameraLayer = cameraEngine.previewLayer
+        cameraEngine.previewLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+        cameraEngine.rotationCamera = false
                 
-                
-                
-                present(cameraController, animated: false, completion: { [weak self] in
+        present(cameraController, animated: false, completion: { [weak self] in
                     guard self != nil else { return }
 
                     Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
@@ -463,8 +456,6 @@ extension ImagePickerSheetController {
                     })
                 })
                 isCameraControllerPreseneted = true
-            }
-        }
     }
 
     

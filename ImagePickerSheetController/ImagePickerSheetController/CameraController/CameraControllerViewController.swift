@@ -116,9 +116,10 @@ class CameraControllerViewController: UIViewController {
         bottomBar.backgroundColor = .black
         topBar.backgroundColor = .black
         
+        //
         cameraPreviewView.backgroundColor = .red
         
-        
+        cameraLayer.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         cameraPreviewView.layer.addSublayer(cameraLayer)
     }
     
@@ -134,7 +135,7 @@ class CameraControllerViewController: UIViewController {
             
             CATransaction.begin()
             CATransaction.setAnimationDuration(2)
-            self.cameraLayer.frame = CGRect(x: 0, y: 44, width: 200, height: 375)
+            self.cameraLayer.frame = CGRect(x: 0, y: 44, width: 375, height: 375)
             CATransaction.commit()
             
             
