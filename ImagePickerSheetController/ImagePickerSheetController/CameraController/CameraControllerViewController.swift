@@ -30,7 +30,6 @@ class CameraControllerViewController: UIViewController {
         super.viewWillLayoutSubviews()
         getCameraLayer()
         
-        cameraLayer.frame = view.frame
     }
 
 
@@ -63,7 +62,7 @@ class CameraControllerViewController: UIViewController {
     // MARK: - Settings 
     
     private func setupSettings() {
-//        definesPresentationContext = true
+        definesPresentationContext = true
     }
     
     // MARK: - UI

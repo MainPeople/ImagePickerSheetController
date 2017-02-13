@@ -434,25 +434,26 @@ extension ImagePickerSheetController {
         
         for sublayer in cameraLiveCell.containerView.layer.sublayers! {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
-                
                 let cameraController = CameraControllerViewController()
                 cameraController.isHeroEnabled = true
 //                cameraController.modalPresentationStyle = .overFullScreen
                 cameraEngine.previewLayer.frame = UIScreen.main.bounds
                 cameraController.view.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
+                cameraController.view.frame = UIScreen.main.bounds
                 
+                cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+
                 cameraEngine.rotationCamera = false
     
+                
                 // hero
                 let heroID = "LiveCamera"
-                view.heroID = heroID
+                cameraController.view.heroID = heroID
                 cameraLiveCell.heroID = heroID
-
+            
                 
                 present(cameraController, animated: true, completion: { [weak self] in
-                    debugPrint("Completion presentation")
                     Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
-//                        cameraController.dismiss(animated: true, completion: nil)
                         cameraController.dismiss(animated: true, completion: {
                             self?.returnCameraLayerToCell()
                         })
@@ -462,7 +463,6 @@ extension ImagePickerSheetController {
                 isCameraControllerPreseneted = true
             }
         }
-        
     }
     
     
