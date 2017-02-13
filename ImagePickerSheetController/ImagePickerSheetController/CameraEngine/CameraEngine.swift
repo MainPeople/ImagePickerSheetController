@@ -258,6 +258,7 @@ public class CameraEngine: NSObject {
     }
     
     deinit {
+        debugPrint("CameraEngine is deinit")
         self.stopSession()
         NotificationCenter.default.removeObserver(self)
     }

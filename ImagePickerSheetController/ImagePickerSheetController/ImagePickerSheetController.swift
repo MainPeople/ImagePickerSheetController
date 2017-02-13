@@ -346,8 +346,6 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
         }
     }
     
-
-    
 }
 
 // MARK: - UICollectionViewDelegate
