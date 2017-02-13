@@ -42,6 +42,7 @@
 		49DC4AAF1B14FB9A00B4E78E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */; };
 		49F3118A1B15074100ACD6A7 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 49F3118C1B15074100ACD6A7 /* Localizable.stringsdict */; };
 		49F3118D1B15074400ACD6A7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49F3118F1B15074400ACD6A7 /* Localizable.strings */; };
+		A68D12061E5198F900C0AA8A /* CameraControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68D12051E5198F900C0AA8A /* CameraControllerViewController.swift */; };
 		A6B121B91E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */; };
 		A6B121BA1E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */; };
 		A6B121BB1E4C930F001C19ED /* ImagePickerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */; };
@@ -172,6 +173,7 @@
 		49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		49F3118B1B15074100ACD6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		49F3118E1B15074400ACD6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A68D12051E5198F900C0AA8A /* CameraControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraControllerViewController.swift; sourceTree = "<group>"; };
 		A6B121B51E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerLiveCameraCollectionCell.swift; sourceTree = "<group>"; };
 		A6B121B61E4C930F001C19ED /* ImagePickerLiveCameraCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImagePickerLiveCameraCollectionCell.xib; sourceTree = "<group>"; };
 		A6B121B71E4C930F001C19ED /* ImagePickerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCollectionCell.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		49DC4A531B14F1BC00B4E78E /* ImagePickerSheetController */ = {
 			isa = PBXGroup;
 			children = (
+				A68D12041E5198BF00C0AA8A /* CameraController */,
 				A6CE815B1E50F95B00C443B4 /* Hero */,
 				A6B121D31E4CEC98001C19ED /* CameraEngine */,
 				49DC4A6E1B14F1F600B4E78E /* ImagePickerAction.swift */,
@@ -370,6 +373,14 @@
 				49DC4AAD1B14FB9A00B4E78E /* Nimble.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A68D12041E5198BF00C0AA8A /* CameraController */ = {
+			isa = PBXGroup;
+			children = (
+				A68D12051E5198F900C0AA8A /* CameraControllerViewController.swift */,
+			);
+			path = CameraController;
 			sourceTree = "<group>";
 		};
 		A6B121B41E4C92CC001C19ED /* Cells */ = {
@@ -616,6 +627,7 @@
 				A6B121E41E4CECD2001C19ED /* CameraEngineGifEncoder.swift in Sources */,
 				494B3B711B8EF3CB004B467C /* ImagePickerSheetController.swift in Sources */,
 				A6CE81771E50F99700C443B4 /* BasePreprocessor.swift in Sources */,
+				A68D12061E5198F900C0AA8A /* CameraControllerViewController.swift in Sources */,
 				A6CE818C1E50F99700C443B4 /* IgnoreSubviewModifiersPreprocessor.swift in Sources */,
 				A6CE81821E50F99700C443B4 /* HeroDebugView.swift in Sources */,
 				49665AD71B8F2DC6005AA666 /* SheetController.swift in Sources */,

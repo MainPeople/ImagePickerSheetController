@@ -11,7 +11,7 @@ import AVFoundation
 
 class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
     
-    @IBOutlet fileprivate weak var containerView: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     
     fileprivate let cameraSession = AVCaptureSession()

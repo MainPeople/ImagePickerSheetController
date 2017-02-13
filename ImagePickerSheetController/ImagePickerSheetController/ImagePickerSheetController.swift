@@ -337,7 +337,10 @@ extension ImagePickerSheetController: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         debugPrint("didSelectItemAt")
-        
+        if indexPath.row == 0 {
+            // this is a camera
+            presentCameraController()
+        }
         
 //        delegate?.controller?(self, didSelectAsset: selectedAsset)
     }
@@ -400,6 +403,43 @@ extension ImagePickerSheetController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return AnimationController(imagePickerSheetController: self, presenting: false)
+    }
+    
+}
+
+// MARK: - Camera
+
+extension ImagePickerSheetController {
+    
+    
+    fileprivate func presentCameraController() {
+        guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
+        
+        
+        for sublayer in cameraLiveCell.containerView.layer.sublayers! {
+            if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
+                
+                let cameraController = CameraControllerViewController()
+                cameraController.isHeroEnabled = true
+                cameraController.modalPresentationStyle = .overFullScreen
+                sublayer.frame = UIScreen.main.bounds
+                view.layer.addSublayer(sublayer)
+                
+                let heroID = "LiveCamera"
+                
+                view.heroID = heroID
+                cameraLiveCell.heroID = heroID
+                
+                present(cameraController, animated: true, completion: {
+                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+                        cameraController.dismiss(animated: true, completion: nil)
+                        debugPrint("Dissmiss")
+                    })
+                })
+                
+            }
+        }
+        
     }
     
 }
