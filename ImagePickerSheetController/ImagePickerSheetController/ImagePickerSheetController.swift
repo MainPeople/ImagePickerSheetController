@@ -415,6 +415,7 @@ extension ImagePickerSheetController {
     fileprivate func presentCameraController() {
         guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
         
+        guard cameraLiveCell.containerView.layer.sublayers != nil else { return }
         
         for sublayer in cameraLiveCell.containerView.layer.sublayers! {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
@@ -423,7 +424,7 @@ extension ImagePickerSheetController {
                 cameraController.isHeroEnabled = true
                 cameraController.modalPresentationStyle = .overFullScreen
                 sublayer.frame = UIScreen.main.bounds
-                view.layer.addSublayer(sublayer)
+                cameraController.view.layer.addSublayer(sublayer)
                 
                 let heroID = "LiveCamera"
                 
@@ -431,10 +432,11 @@ extension ImagePickerSheetController {
                 cameraLiveCell.heroID = heroID
                 
                 present(cameraController, animated: true, completion: {
-                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-                        cameraController.dismiss(animated: true, completion: nil)
-                        debugPrint("Dissmiss")
-                    })
+                    debugPrint("Completion presentation")
+//                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+//                        testController.dismiss(animated: true, completion: nil)
+//                        debugPrint("Dismiss")
+//                    })
                 })
                 
             }

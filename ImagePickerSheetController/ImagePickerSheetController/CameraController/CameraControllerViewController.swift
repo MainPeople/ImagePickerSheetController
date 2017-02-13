@@ -32,22 +32,17 @@ class CameraControllerViewController: UIViewController {
         getCameraLayer()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
     
+ 
     private func getCameraLayer() {
         guard view.layer.sublayers != nil else { return }
         for sublayer in view.layer.sublayers! {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
                 cameraLayer = sublayer as! AVCaptureVideoPreviewLayer
-                
-//                cameraLayer.frame = UIScreen.main.bounds
-//                view.layer.addSublayer(cameraLayer)
             }
         }
     }
@@ -58,6 +53,8 @@ class CameraControllerViewController: UIViewController {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: OperationQueue.main) { [weak self] (_) -> Void in
+            guard self != nil else { return }
+            self!.cameraLayer.frame = self!.view.frame
             self?.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
         }
     }
