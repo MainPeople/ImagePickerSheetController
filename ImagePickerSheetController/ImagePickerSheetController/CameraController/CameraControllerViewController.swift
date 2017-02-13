@@ -17,7 +17,7 @@ class CameraControllerViewController: UIViewController {
     private let topBar = UIView()
     private let cameraPreviewView = UIView()
     
-    private var cameraLayer = AVCaptureVideoPreviewLayer()
+    var cameraLayer = AVCaptureVideoPreviewLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,14 +117,27 @@ class CameraControllerViewController: UIViewController {
         topBar.backgroundColor = .black
         
         cameraPreviewView.backgroundColor = .red
+        
+        
+        cameraPreviewView.layer.addSublayer(cameraLayer)
     }
     
     // MARK: - Animation
     
     private func animateCameraView() {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 2, animations: {
             self.cameraPreviewView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
             self.cameraPreviewView.topAnchor.constraint(equalTo: self.topBar.bottomAnchor).isActive = true
+            
+            // layer animate 
+            
+            
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(2)
+            self.cameraLayer.frame = CGRect(x: 0, y: 44, width: 200, height: 375)
+            CATransaction.commit()
+            
+            
             self.view.layoutIfNeeded()
         }) { (transtale) in
             

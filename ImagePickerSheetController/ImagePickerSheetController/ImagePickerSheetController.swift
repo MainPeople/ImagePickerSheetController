@@ -446,18 +446,16 @@ extension ImagePickerSheetController {
         
         for sublayer in cameraLiveCell.containerView.layer.sublayers! {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
-                let cameraController = CameraControllerViewController()
 
-                for sublayer in cameraLiveCell.containerView.layer.sublayers! {
-                    if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
-                        sublayer.frame = UIScreen.main.bounds
-                    }
-                }
-    
+                let cameraController = CameraControllerViewController()
+                cameraController.cameraLayer = sublayer as! AVCaptureVideoPreviewLayer
+                
+                
+                
                 present(cameraController, animated: false, completion: { [weak self] in
                     guard self != nil else { return }
 
-                    Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
+                    Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
                         cameraController.dismiss(animated: true, completion: {
                             self?.returnCameraLayerToCell()
                         })
