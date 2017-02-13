@@ -15,7 +15,6 @@ class CameraControllerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addObserver()
         // settings 
         setupSettings()
         // UI
@@ -37,6 +36,17 @@ class CameraControllerViewController: UIViewController {
         return false
     }
     
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
  
     private func getCameraLayer() {
         guard view.layer.sublayers != nil else { return }
@@ -46,18 +56,7 @@ class CameraControllerViewController: UIViewController {
             }
         }
     }
-    
-    
-    private func addObserver() {
-//        if (!UIDevice.current.isGeneratingDeviceOrientationNotifications) {
-//            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-//        }
-//        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: OperationQueue.main) { [weak self] (_) -> Void in
-//            guard self != nil else { return }
-//            self!.cameraLayer.frame = self!.view.frame
-//            self?.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
-//        }
-    }
+
     
     // MARK: - Settings 
     
@@ -69,6 +68,7 @@ class CameraControllerViewController: UIViewController {
     
     private func setupUISettings() {
         view.backgroundColor = .black
+        
     }
     
     

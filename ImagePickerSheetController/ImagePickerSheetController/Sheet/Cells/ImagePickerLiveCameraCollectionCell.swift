@@ -24,14 +24,11 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
         // Initialization code
         setupViewSettings()
         setupUIHierarchy()
-        
-        // Layer orientation
     }
-    
 
     private func setupUIHierarchy() {
         containerView.bringSubview(toFront: imageView)
-        imageView.layer.zPosition = 0
+        imageView.layer.zPosition = 2
     }
     
 }

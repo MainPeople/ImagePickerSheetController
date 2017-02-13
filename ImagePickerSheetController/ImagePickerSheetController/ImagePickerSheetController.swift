@@ -156,7 +156,7 @@ open class ImagePickerSheetController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         // Camera
-        cameraEngine.rotationCamera = true
+        cameraEngine.rotationCamera = false
         cameraEngine.currentDevice = .front
         cameraEngine.startSession()
         // UI
@@ -186,6 +186,15 @@ open class ImagePickerSheetController: UIViewController {
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
+    
+    
+    // MARK: - s
+    
+    override open var shouldAutorotate: Bool {
+        return true
+    }
+    
+  
     
     // MARK: - Actions
     
@@ -289,7 +298,6 @@ extension ImagePickerSheetController {
     }
     
     private func registerCollectionViewElements() {
-//        previewPhotoCollectionView.register(PreviewSupplementaryView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self))
         // cells
         let photoNib = UINib(nibName: "ImagePickerCollectionCell", bundle: Bundle(identifier: "com.SCImagePickerSheetController"))
         previewPhotoCollectionView.register(photoNib, forCellWithReuseIdentifier: imagePickerCollectionCellIdentifier)
@@ -325,17 +333,7 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
         }
     }
     
-//    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath:
-//        IndexPath) -> UICollectionReusableView {
-//        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: NSStringFromClass(PreviewSupplementaryView.self), for: indexPath) as! PreviewSupplementaryView
-//        view.isUserInteractionEnabled = false
-//        view.buttonInset = UIEdgeInsetsMake(0.0, previewCheckmarkInset, previewCheckmarkInset, 0.0)
-//        view.selected = selectedAssetIndices.contains(indexPath.section)
-//        
-//        supplementaryViews[indexPath.section] = view
-//        
-//        return view
-//    }
+
     
 }
 
@@ -435,7 +433,7 @@ extension ImagePickerSheetController {
                 cameraController.isHeroEnabled = true
                 cameraController.modalPresentationStyle = .overFullScreen
                 cameraEngine.previewLayer.frame = UIScreen.main.bounds
-                cameraController.view.layer.addSublayer(cameraEngine.previewLayer)
+                cameraController.view.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
                 
     
                 let heroID = "LiveCamera"
@@ -445,10 +443,10 @@ extension ImagePickerSheetController {
                 
                 present(cameraController, animated: true, completion: {
                     debugPrint("Completion presentation")
-                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-                        testController.dismiss(animated: true, completion: nil)
-                        debugPrint("Dismiss")
-                    })
+//                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+//                        cameraController.hero_dismissViewController()
+//                        debugPrint("Dismiss")
+//                    })
                 })
                 
             }
