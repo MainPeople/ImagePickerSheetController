@@ -108,6 +108,9 @@ class CameraControllerViewController: UIViewController {
         cameraPreviewView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor).isActive = true
         cameraPreviewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         
+        // test
+        cameraPreviewView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        cameraPreviewView.topAnchor.constraint(equalTo: self.topBar.bottomAnchor).isActive = true
         
     }
     
@@ -116,45 +119,48 @@ class CameraControllerViewController: UIViewController {
         topBar.backgroundColor = .black
         
         //
-        cameraPreviewView.backgroundColor = .red
+        cameraPreviewView.backgroundColor = .black
         
-        cameraLayer.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        // bottom height
+        let widthValue = UIScreen.main.bounds.width
+        let heightValue = UIScreen.main.bounds.height
+        
+        let negativeValue: CGFloat = 44 + 96
+    
+        var Y: CGFloat = 0
+        var X: CGFloat = 0
+        
+        if widthValue > heightValue {
+            Y = widthValue - negativeValue
+        } else {
+            Y = heightValue - negativeValue
+        }
+        
+        cameraLayer.frame = CGRect(x: X, y: Y, width: 0, height: 0)
         cameraPreviewView.layer.addSublayer(cameraLayer)
     }
     
     // MARK: - Animation
     
     private func animateCameraView() {
-        UIView.animate(withDuration: 2, animations: {
-            self.cameraPreviewView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-            self.cameraPreviewView.topAnchor.constraint(equalTo: self.topBar.bottomAnchor).isActive = true
-            
-            // layer animate 
-            
-            let widthValue = UIScreen.main.bounds.width
-            let heightValue = UIScreen.main.bounds.height
-            
-            var setupWidthValue: CGFloat!
-            var setupHeightValue: CGFloat!
-            
-            if widthValue < heightValue {
-                setupWidthValue = widthValue
-                setupHeightValue = heightValue - 44 - 96
-            } else {
-                setupWidthValue = heightValue
-                setupHeightValue = widthValue - 44 - 96
-            }
+        let widthValue = UIScreen.main.bounds.width
+        let heightValue = UIScreen.main.bounds.height
         
-            CATransaction.begin()
-            CATransaction.setAnimationDuration(2)
-            self.cameraLayer.frame = CGRect(x: 0, y: 0, width: setupWidthValue, height: setupHeightValue)
-            CATransaction.commit()
-            
-            self.view.layoutIfNeeded()
-        }) { (transtale) in
-            
+        var setupWidthValue: CGFloat!
+        var setupHeightValue: CGFloat!
+        
+        if widthValue < heightValue {
+            setupWidthValue = widthValue
+            setupHeightValue = heightValue - 44 - 96
+        } else {
+            setupWidthValue = heightValue
+            setupHeightValue = widthValue - 44 - 96
         }
         
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.5)
+        self.cameraLayer.frame = CGRect(x: 0, y: 0, width: setupWidthValue, height: setupHeightValue)
+        CATransaction.commit()
     }
     
 }
