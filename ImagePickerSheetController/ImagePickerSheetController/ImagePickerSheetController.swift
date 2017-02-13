@@ -114,6 +114,10 @@ open class ImagePickerSheetController: UIViewController {
     fileprivate var cameraEngine = CameraEngine()
     fileprivate var isCameraControllerPreseneted = false
     
+    // MARK: - Cells 
+    
+    fileprivate var cameraLiveCell: ImagePickerLiveCameraCollectionCell!
+    
     
     /// Whether the image preview has been elarged. This is the case when at least once
     /// image has been selected.
@@ -331,9 +335,12 @@ extension ImagePickerSheetController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 {
             let cell = imagePickerLiveCameraCollectionCell(collectionView, indexPath: indexPath)
+            
+            cameraLiveCell = cell
             return cell
         } else {
             let cell = imagePickerCollectionCell(collectionView, indexPath: indexPath)
+    
             
             return cell
         }
@@ -402,6 +409,12 @@ extension ImagePickerSheetController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier, for: indexPath) as! ImagePickerLiveCameraCollectionCell
         
         cameraEngine.previewLayer.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
+        
+        // camera orientation
+        
+        cameraEngine.previewLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+
+        
         cell.containerView.layer.addSublayer(cameraEngine.previewLayer)
         return cell
     }
@@ -426,7 +439,6 @@ extension ImagePickerSheetController: UIViewControllerTransitioningDelegate {
 
 extension ImagePickerSheetController {
     
-    
     fileprivate func presentCameraController() {
         guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
         
@@ -436,23 +448,38 @@ extension ImagePickerSheetController {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
                 let cameraController = CameraControllerViewController()
                 cameraController.isHeroEnabled = true
-//                cameraController.modalPresentationStyle = .overFullScreen
-                cameraEngine.previewLayer.frame = UIScreen.main.bounds
-                cameraController.view.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
-                cameraController.view.frame = UIScreen.main.bounds
+//                cameraEngine.previewLayer.frame = UIScreen.main.bounds
+//                cameraController.view.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
+//                
+//                cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+//
+//                cameraEngine.rotationCamera = false
                 
-                cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
-
-                cameraEngine.rotationCamera = false
+                for sublayer in self.cameraLiveCell.containerView.layer.sublayers! {
+                    debugPrint("sublayer", sublayer)
+                    if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
+                        sublayer.frame = UIScreen.main.bounds
+                    }
+                    if sublayer.isKind(of: UIImageView.self) {
+                        sublayer.removeFromSuperlayer()
+                    }
+                }
     
-                
                 // hero
                 let heroID = "LiveCamera"
                 cameraController.view.heroID = heroID
                 cameraLiveCell.heroID = heroID
-            
+                cameraController.view.heroModifiers = [.duration(0.2)]
                 
                 present(cameraController, animated: true, completion: { [weak self] in
+                    guard self != nil else { return }
+                    self!.cameraEngine.previewLayer.frame = UIScreen.main.bounds
+                    cameraController.view.layer.insertSublayer(self!.cameraEngine.previewLayer, at: 1)
+                    
+                    self!.cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+                    self!.cameraEngine.rotationCamera = false
+
+                    
                     Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
                         cameraController.dismiss(animated: true, completion: {
                             self?.returnCameraLayerToCell()

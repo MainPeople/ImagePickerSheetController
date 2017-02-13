@@ -29,9 +29,7 @@ class CameraControllerViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         getCameraLayer()
-        
     }
-
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -58,7 +56,6 @@ class CameraControllerViewController: UIViewController {
         }
     }
 
-    
     // MARK: - Settings 
     
     private func setupSettings() {
@@ -68,7 +65,7 @@ class CameraControllerViewController: UIViewController {
     // MARK: - UI
     
     private func setupUISettings() {
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
     }
     
     

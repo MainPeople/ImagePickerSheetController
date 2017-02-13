@@ -25,6 +25,13 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
         setupViewSettings()
         setupUIHierarchy()
     }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        for sublayer in containerView.layer.sublayers! {
+            debugPrint("live camera sublayer", sublayer)
+        }
+    }
 
     private func setupUIHierarchy() {
         containerView.bringSubview(toFront: imageView)
