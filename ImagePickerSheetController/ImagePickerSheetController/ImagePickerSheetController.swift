@@ -455,7 +455,7 @@ extension ImagePickerSheetController {
 //
 //                cameraEngine.rotationCamera = false
                 
-                for sublayer in self.cameraLiveCell.containerView.layer.sublayers! {
+                for sublayer in cameraLiveCell.containerView.layer.sublayers! {
                     debugPrint("sublayer", sublayer)
                     if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
                         sublayer.frame = UIScreen.main.bounds
@@ -469,17 +469,17 @@ extension ImagePickerSheetController {
                 let heroID = "LiveCamera"
                 cameraController.view.heroID = heroID
                 cameraLiveCell.heroID = heroID
-                cameraController.view.heroModifiers = [.duration(0.2)]
+                cameraController.view.heroModifiers = [.cascade]
                 
-                present(cameraController, animated: true, completion: { [weak self] in
+                present(cameraController, animated: false, completion: { [weak self] in
                     guard self != nil else { return }
+                    // frame
                     self!.cameraEngine.previewLayer.frame = UIScreen.main.bounds
                     cameraController.view.layer.insertSublayer(self!.cameraEngine.previewLayer, at: 1)
                     
                     self!.cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
                     self!.cameraEngine.rotationCamera = false
 
-                    
                     Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
                         cameraController.dismiss(animated: true, completion: {
                             self?.returnCameraLayerToCell()
@@ -491,7 +491,7 @@ extension ImagePickerSheetController {
             }
         }
     }
-    
+
     
     fileprivate func returnCameraLayerToCell() {
         if isCameraControllerPreseneted == true {
