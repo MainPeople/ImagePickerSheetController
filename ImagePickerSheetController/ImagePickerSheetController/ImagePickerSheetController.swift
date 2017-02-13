@@ -358,8 +358,7 @@ extension ImagePickerSheetController: UICollectionViewDelegate {
         debugPrint("didSelectItemAt")
         if indexPath.row == 0 {
             // this is a camera
-//            presentCameraController()
-            presentImagePicker()
+            presentCameraController()
         }
         
 //        delegate?.controller?(self, didSelectAsset: selectedAsset)
@@ -448,38 +447,15 @@ extension ImagePickerSheetController {
         for sublayer in cameraLiveCell.containerView.layer.sublayers! {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
                 let cameraController = CameraControllerViewController()
-                cameraController.isHeroEnabled = true
-//                cameraEngine.previewLayer.frame = UIScreen.main.bounds
-//                cameraController.view.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
-//                
-//                cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
-//
-//                cameraEngine.rotationCamera = false
-                
+
                 for sublayer in cameraLiveCell.containerView.layer.sublayers! {
-                    debugPrint("sublayer", sublayer)
                     if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
                         sublayer.frame = UIScreen.main.bounds
                     }
-                    if sublayer.isKind(of: UIImageView.self) {
-                        sublayer.removeFromSuperlayer()
-                    }
                 }
     
-                // hero
-                let heroID = "LiveCamera"
-                cameraController.view.heroID = heroID
-                cameraLiveCell.heroID = heroID
-//                cameraController.view.heroModifiers = [.cascade]
-                
-                present(cameraController, animated: true, completion: { [weak self] in
+                present(cameraController, animated: false, completion: { [weak self] in
                     guard self != nil else { return }
-                    // frame
-                    self!.cameraEngine.previewLayer.frame = UIScreen.main.bounds
-                    cameraController.view.layer.insertSublayer(self!.cameraEngine.previewLayer, at: 1)
-                    
-                    self!.cameraEngine.previewLayer.connection.videoOrientation = .portrait
-                    self!.cameraEngine.rotationCamera = false
 
                     Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
                         cameraController.dismiss(animated: true, completion: {

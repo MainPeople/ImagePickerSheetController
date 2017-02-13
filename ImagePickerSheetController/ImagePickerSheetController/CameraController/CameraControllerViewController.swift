@@ -10,6 +10,12 @@ import UIKit
 import AVFoundation
 
 class CameraControllerViewController: UIViewController {
+
+    // MARK: - UI
+    
+    private let bottomBar = UIView()
+    private let topBar = UIView()
+    private let cameraPreviewView = UIView()
     
     private var cameraLayer = AVCaptureVideoPreviewLayer()
 
@@ -19,16 +25,25 @@ class CameraControllerViewController: UIViewController {
         setupSettings()
         // UI
         setupUISettings()
+        addUIElements()
+        setupViewsSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCameraLayer()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateCameraView()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         getCameraLayer()
+        setupUIElementsPositions()
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -68,6 +83,52 @@ class CameraControllerViewController: UIViewController {
         view.backgroundColor = .clear
     }
     
+    private func addUIElements() {
+        bottomBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bottomBar)
+        topBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(topBar)
+        cameraPreviewView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(cameraPreviewView)
+    }
     
-
+    private func setupUIElementsPositions() {
+        bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bottomBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        bottomBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        bottomBar.heightAnchor.constraint(equalToConstant: 96).isActive = true
+        
+        topBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        topBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        topBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        
+        
+        cameraPreviewView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor).isActive = true
+        cameraPreviewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        cameraPreviewView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        
+//        animateCameraView()
+    }
+    
+    private func setupViewsSettings() {
+        bottomBar.backgroundColor = .black
+        topBar.backgroundColor = .black
+        
+        cameraPreviewView.backgroundColor = .red
+    }
+    
+    // MARK: - Animation
+    
+    private func animateCameraView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.cameraPreviewView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            self.cameraPreviewView.topAnchor.constraint(equalTo: self.topBar.bottomAnchor).isActive = true
+            self.view.layoutIfNeeded()
+        }) { (transtale) in
+            
+        }
+    }
+    
 }
