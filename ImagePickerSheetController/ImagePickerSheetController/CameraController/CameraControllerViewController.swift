@@ -45,6 +45,7 @@ class CameraControllerViewController: UIViewController {
         getCameraLayer()
         setupUIElementsPositions()
     }
+ 
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -106,10 +107,8 @@ class CameraControllerViewController: UIViewController {
         
         cameraPreviewView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor).isActive = true
         cameraPreviewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        cameraPreviewView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         
-//        animateCameraView()
     }
     
     private func setupViewsSettings() {
@@ -132,17 +131,30 @@ class CameraControllerViewController: UIViewController {
             
             // layer animate 
             
+            let widthValue = UIScreen.main.bounds.width
+            let heightValue = UIScreen.main.bounds.height
             
+            var setupWidthValue: CGFloat!
+            var setupHeightValue: CGFloat!
+            
+            if widthValue < heightValue {
+                setupWidthValue = widthValue
+                setupHeightValue = heightValue - 44 - 96
+            } else {
+                setupWidthValue = heightValue
+                setupHeightValue = widthValue - 44 - 96
+            }
+        
             CATransaction.begin()
             CATransaction.setAnimationDuration(2)
-            self.cameraLayer.frame = CGRect(x: 0, y: 44, width: 375, height: 375)
+            self.cameraLayer.frame = CGRect(x: 0, y: 0, width: setupWidthValue, height: setupHeightValue)
             CATransaction.commit()
-            
             
             self.view.layoutIfNeeded()
         }) { (transtale) in
             
         }
+        
     }
     
 }

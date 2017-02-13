@@ -442,7 +442,7 @@ extension ImagePickerSheetController {
     fileprivate func presentCameraController() {
         let cameraController = CameraControllerViewController()
         cameraController.cameraLayer = cameraEngine.previewLayer
-        cameraEngine.previewLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+        cameraEngine.previewLayer.connection.videoOrientation = .portrait// AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
         cameraEngine.rotationCamera = false
                 
         present(cameraController, animated: false, completion: { [weak self] in
