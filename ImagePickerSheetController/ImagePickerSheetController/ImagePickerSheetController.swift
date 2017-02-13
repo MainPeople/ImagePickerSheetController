@@ -109,6 +109,10 @@ open class ImagePickerSheetController: UIViewController {
     
     fileprivate let imageManager = PHCachingImageManager()
     
+    // MARK: - Camera 
+    
+    fileprivate var cameraEngine = CameraEngine()
+    
     
     /// Whether the image preview has been elarged. This is the case when at least once
     /// image has been selected.
@@ -151,6 +155,10 @@ open class ImagePickerSheetController: UIViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        // Camera
+        cameraEngine.rotationCamera = true
+        cameraEngine.currentDevice = .front
+        cameraEngine.startSession()
         // UI
         addUIElements()
         // Collection view
@@ -388,6 +396,9 @@ extension ImagePickerSheetController {
     
     fileprivate func imagePickerLiveCameraCollectionCell(_ collectionView: UICollectionView, indexPath: IndexPath) -> ImagePickerLiveCameraCollectionCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerLiveCameraCollectionCellIdentifier, for: indexPath) as! ImagePickerLiveCameraCollectionCell
+        
+        cameraEngine.previewLayer.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
+        cell.containerView.layer.addSublayer(cameraEngine.previewLayer)
         return cell
     }
     
@@ -423,9 +434,10 @@ extension ImagePickerSheetController {
                 let cameraController = CameraControllerViewController()
                 cameraController.isHeroEnabled = true
                 cameraController.modalPresentationStyle = .overFullScreen
-                sublayer.frame = UIScreen.main.bounds
-                cameraController.view.layer.addSublayer(sublayer)
+                cameraEngine.previewLayer.frame = UIScreen.main.bounds
+                cameraController.view.layer.addSublayer(cameraEngine.previewLayer)
                 
+    
                 let heroID = "LiveCamera"
                 
                 view.heroID = heroID
@@ -433,10 +445,10 @@ extension ImagePickerSheetController {
                 
                 present(cameraController, animated: true, completion: {
                     debugPrint("Completion presentation")
-//                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-//                        testController.dismiss(animated: true, completion: nil)
-//                        debugPrint("Dismiss")
-//                    })
+                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+                        testController.dismiss(animated: true, completion: nil)
+                        debugPrint("Dismiss")
+                    })
                 })
                 
             }

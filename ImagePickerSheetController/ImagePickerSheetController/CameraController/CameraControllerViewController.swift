@@ -49,20 +49,20 @@ class CameraControllerViewController: UIViewController {
     
     
     private func addObserver() {
-        if (!UIDevice.current.isGeneratingDeviceOrientationNotifications) {
-            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: OperationQueue.main) { [weak self] (_) -> Void in
-            guard self != nil else { return }
-            self!.cameraLayer.frame = self!.view.frame
-            self?.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
-        }
+//        if (!UIDevice.current.isGeneratingDeviceOrientationNotifications) {
+//            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+//        }
+//        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIDeviceOrientationDidChange, object: nil, queue: OperationQueue.main) { [weak self] (_) -> Void in
+//            guard self != nil else { return }
+//            self!.cameraLayer.frame = self!.view.frame
+//            self?.cameraLayer.connection.videoOrientation = AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+//        }
     }
     
     // MARK: - Settings 
     
     private func setupSettings() {
-        definesPresentationContext = true
+//        definesPresentationContext = true
     }
     
     // MARK: - UI
