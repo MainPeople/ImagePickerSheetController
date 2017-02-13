@@ -29,11 +29,13 @@ class CameraControllerViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         getCameraLayer()
+        
+        cameraLayer.frame = view.frame
     }
-    
+
 
     override var prefersStatusBarHidden: Bool {
-        return false
+        return true
     }
     
     override var shouldAutorotate: Bool {
@@ -68,7 +70,6 @@ class CameraControllerViewController: UIViewController {
     
     private func setupUISettings() {
         view.backgroundColor = .black
-        
     }
     
     

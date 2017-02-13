@@ -112,6 +112,7 @@ open class ImagePickerSheetController: UIViewController {
     // MARK: - Camera 
     
     fileprivate var cameraEngine = CameraEngine()
+    fileprivate var isCameraControllerPreseneted = false
     
     
     /// Whether the image preview has been elarged. This is the case when at least once
@@ -156,7 +157,7 @@ open class ImagePickerSheetController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         // Camera
-        cameraEngine.rotationCamera = false
+        cameraEngine.rotationCamera = true
         cameraEngine.currentDevice = .front
         cameraEngine.startSession()
         // UI
@@ -174,6 +175,7 @@ open class ImagePickerSheetController: UIViewController {
         } else {
             // for camera
         }
+        
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -190,9 +192,13 @@ open class ImagePickerSheetController: UIViewController {
     
     // MARK: - s
     
-    override open var shouldAutorotate: Bool {
-        return true
-    }
+//    override open var shouldAutorotate: Bool {
+//        return true
+//    }
+//    
+//    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return .all
+//    }
     
   
     
@@ -430,28 +436,52 @@ extension ImagePickerSheetController {
             if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
                 
                 let cameraController = CameraControllerViewController()
-                cameraController.isHeroEnabled = true
+//                cameraController.isHeroEnabled = true
                 cameraController.modalPresentationStyle = .overFullScreen
                 cameraEngine.previewLayer.frame = UIScreen.main.bounds
                 cameraController.view.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
                 
+                cameraEngine.rotationCamera = false
     
                 let heroID = "LiveCamera"
                 
                 view.heroID = heroID
                 cameraLiveCell.heroID = heroID
                 
-                present(cameraController, animated: true, completion: {
+                present(cameraController, animated: true, completion: { [weak self] in
                     debugPrint("Completion presentation")
-//                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
-//                        cameraController.hero_dismissViewController()
-//                        debugPrint("Dismiss")
-//                    })
+                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (timer) in
+//                        cameraController.dismiss(animated: true, completion: nil)
+                        cameraController.dismiss(animated: true, completion: {
+                            self?.returnCameraLayerToCell()
+                        })
+                        debugPrint("Dismiss")
+                    })
                 })
-                
+                isCameraControllerPreseneted = true
             }
         }
         
+    }
+    
+    
+    fileprivate func returnCameraLayerToCell() {
+        if isCameraControllerPreseneted == true {
+            guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
+            cameraEngine.rotationCamera = true
+            cameraEngine.previewLayer.frame = CGRect(x: 0, y: 0, width: 95, height: 95)
+            
+            
+            if let sublayers = cameraLiveCell.containerView.layer.sublayers {
+                for sublayer in sublayers {
+                    if sublayer.isKind(of: AVCaptureVideoPreviewLayer.self) {
+                        sublayer.removeFromSuperlayer()
+                    }
+                }
+            }
+            
+            cameraLiveCell.containerView.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
+        }
     }
     
 }

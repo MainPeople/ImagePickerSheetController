@@ -34,8 +34,7 @@ class ImagePickerLiveCameraCollectionCell: UICollectionViewCell {
 }
 
 
-extension ImagePickerLiveCameraCollectionCell:  AVCaptureVideoDataOutputSampleBufferDelegate{
-
+extension ImagePickerLiveCameraCollectionCell {
     
     fileprivate func setupViewSettings() {
         containerView.layer.cornerRadius = 7
