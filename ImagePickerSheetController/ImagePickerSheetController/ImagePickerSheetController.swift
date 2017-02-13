@@ -358,7 +358,8 @@ extension ImagePickerSheetController: UICollectionViewDelegate {
         debugPrint("didSelectItemAt")
         if indexPath.row == 0 {
             // this is a camera
-            presentCameraController()
+//            presentCameraController()
+            presentImagePicker()
         }
         
 //        delegate?.controller?(self, didSelectAsset: selectedAsset)
@@ -469,18 +470,18 @@ extension ImagePickerSheetController {
                 let heroID = "LiveCamera"
                 cameraController.view.heroID = heroID
                 cameraLiveCell.heroID = heroID
-                cameraController.view.heroModifiers = [.cascade]
+//                cameraController.view.heroModifiers = [.cascade]
                 
-                present(cameraController, animated: false, completion: { [weak self] in
+                present(cameraController, animated: true, completion: { [weak self] in
                     guard self != nil else { return }
                     // frame
                     self!.cameraEngine.previewLayer.frame = UIScreen.main.bounds
                     cameraController.view.layer.insertSublayer(self!.cameraEngine.previewLayer, at: 1)
                     
-                    self!.cameraEngine.previewLayer.connection.videoOrientation = .portrait //AVCaptureVideoOrientation.orientationFromUIDeviceOrientation(UIDevice.current.orientation)
+                    self!.cameraEngine.previewLayer.connection.videoOrientation = .portrait
                     self!.cameraEngine.rotationCamera = false
 
-                    Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
+                    Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
                         cameraController.dismiss(animated: true, completion: {
                             self?.returnCameraLayerToCell()
                         })
@@ -510,6 +511,21 @@ extension ImagePickerSheetController {
             
             cameraLiveCell.containerView.layer.insertSublayer(cameraEngine.previewLayer, at: 1)
         }
+    }
+    
+    fileprivate func presentImagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.cameraDevice = .front
+        
+        guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
+        let heroID = "LiveHero"
+        cameraLiveCell.heroID = heroID
+        
+        imagePicker.view.heroID = heroID
+        
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
 }
