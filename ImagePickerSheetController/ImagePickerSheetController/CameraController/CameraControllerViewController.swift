@@ -19,12 +19,28 @@ class CameraControllerViewController: UIViewController {
     private let shotButton = UIButton(type: .system)
     private let cancelButton = UIButton(type: .system)
     private let switchCameraButton = UIButton(type: .system)
+    private let flashButton = UIButton(type: .custom)
     
     var cameraLayer = AVCaptureVideoPreviewLayer()
-
+    var cameraEngine: CameraEngine!
+    
+    // MARK: - Camera mode label 
+    
+    
+    
+    
+    // MARK: - Images
+    
+    private struct FlashImage {
+        let turnedOn = UIImage(named: "FlashTurnedOn", in: Bundle(identifier: "com.SCImagePickerSheetController"), compatibleWith: nil)
+        let turnedOff = UIImage(named: "FlashTurnedOff", in: Bundle(identifier: "com.SCImagePickerSheetController"), compatibleWith: nil)
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // settings 
+        // settings
         setupSettings()
         // UI
         setupUISettings()
@@ -103,6 +119,8 @@ class CameraControllerViewController: UIViewController {
         bottomBar.addSubview(cancelButton)
         switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
         bottomBar.addSubview(switchCameraButton)
+        flashButton.translatesAutoresizingMaskIntoConstraints = false
+        topBar.addSubview(flashButton)
     }
     
     private func setupUIElementsPositions() {
@@ -136,6 +154,11 @@ class CameraControllerViewController: UIViewController {
         switchCameraButton.rightAnchor.constraint(equalTo: bottomBar.rightAnchor, constant: -20).isActive = true
         switchCameraButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         switchCameraButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        flashButton.widthAnchor.constraint(equalToConstant: 33).isActive = true
+        flashButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        flashButton.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 17).isActive = true
+        flashButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
     }
     
     // MARK: - Animation
@@ -199,12 +222,30 @@ class CameraControllerViewController: UIViewController {
         cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         cancelButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
-        
         let switchIcon = UIImage(named: "SwitchCameraIcon", in: bundle, compatibleWith: nil)
         switchCameraButton.setImage(switchIcon, for: .normal)
         switchCameraButton.tintColor = .white
+        
+        flashButton.setImage(FlashImage().turnedOn, for: .normal)
+        flashButton.tintColor = .white 
+        flashButton.addTarget(self, action: #selector(switchFlashMode), for: .touchUpInside)
+        flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10)
     }
     
-  
+    
+}
+
+// MARK: - Flash
+
+extension CameraControllerViewController {
+    
+    @objc fileprivate func switchFlashMode() {
+        debugPrint("switchFlashMode")
+        if cameraEngine.session.isRunning {
+            cameraEngine.stopSession()
+        } else {
+            cameraEngine.startSession()
+        }
+    }
     
 }
