@@ -229,7 +229,7 @@ class CameraControllerViewController: UIViewController {
         flashButton.setImage(FlashImage().turnedOn, for: .normal)
         flashButton.tintColor = .white 
         flashButton.addTarget(self, action: #selector(switchFlashMode), for: .touchUpInside)
-        flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 10, 5, 10)
+        flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 15)
     }
     
     
