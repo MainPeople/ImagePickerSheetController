@@ -56,6 +56,8 @@ class CameraControllerViewController: UIViewController {
         setupButtonsTargets()
         // Camera
         setupFlashMode(.auto)
+        // Observers
+        addObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +69,12 @@ class CameraControllerViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateCameraView()
+    }
+    
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        debugPrint("CameraController is deinit")
     }
     
     override func viewWillLayoutSubviews() {
@@ -91,6 +99,8 @@ class CameraControllerViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
+    
  
     private func getCameraLayer() {
         guard view.layer.sublayers != nil else { return }
@@ -286,6 +296,21 @@ class CameraControllerViewController: UIViewController {
         flashOffButton.addTarget(self, action: #selector(offTorchAction), for: .touchUpInside)
         flashAutoButton.addTarget(self, action: #selector(autoTorchAction), for: .touchUpInside)
         shotButton.addTarget(self, action: #selector(shotAction), for: .touchUpInside)
+    }
+    
+    
+    // MARK: - Notification center
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(changeUIElementsPositions), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    // MARK: - Rotation
+    
+    @objc private func changeUIElementsPositions() {
+        // change switchCameraButton 
+        debugPrint("changeUIElementsPositions")
+        switchCameraButton.transform = CGAffineTransform(rotationAngle: 90)
     }
     
 }
