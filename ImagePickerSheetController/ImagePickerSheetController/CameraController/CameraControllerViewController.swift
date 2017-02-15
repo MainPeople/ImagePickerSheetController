@@ -20,14 +20,19 @@ class CameraControllerViewController: UIViewController {
     private let cancelButton = UIButton(type: .system)
     private let switchCameraButton = UIButton(type: .system)
     private let flashButton = UIButton(type: .custom)
+    // Flash mode buttons 
+    fileprivate let flashAutoButton = UIButton(type: .custom)
+    fileprivate let flashOnButton = UIButton(type: .custom)
+    fileprivate let flashOffButton = UIButton(type: .custom)
+    
+    // MARK: - Camera
     
     var cameraLayer = AVCaptureVideoPreviewLayer()
     var cameraEngine: CameraEngine!
     
-    // MARK: - Camera mode label 
+    // MARK: - Flags
     
-    
-    
+    fileprivate var areTorchElementsVisibles = false
     
     // MARK: - Images
     
@@ -46,8 +51,11 @@ class CameraControllerViewController: UIViewController {
         setupUISettings()
         addUIElements()
         setupViewsSettings()
-        // UI Elements settings
+        // Buttons
         setupButtonsSettings()
+        setupButtonsTargets()
+        // Camera
+        setupFlashMode(.auto)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,8 +127,15 @@ class CameraControllerViewController: UIViewController {
         bottomBar.addSubview(cancelButton)
         switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
         bottomBar.addSubview(switchCameraButton)
+        // flash
         flashButton.translatesAutoresizingMaskIntoConstraints = false
         topBar.addSubview(flashButton)
+        flashAutoButton.translatesAutoresizingMaskIntoConstraints = false
+        topBar.addSubview(flashAutoButton)
+        flashOnButton.translatesAutoresizingMaskIntoConstraints = false
+        topBar.addSubview(flashOnButton)
+        flashOffButton.translatesAutoresizingMaskIntoConstraints = false
+        topBar.addSubview(flashOffButton)
     }
     
     private func setupUIElementsPositions() {
@@ -159,6 +174,25 @@ class CameraControllerViewController: UIViewController {
         flashButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         flashButton.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 17).isActive = true
         flashButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
+        
+        // mode 
+        
+        flashOnButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
+        flashOnButton.centerXAnchor.constraint(equalTo: topBar.centerXAnchor).isActive = true
+        flashOnButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        flashOnButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        
+        flashAutoButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
+        flashAutoButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        flashAutoButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        flashAutoButton.rightAnchor.constraint(equalTo: flashOnButton.leftAnchor, constant: -40).isActive = true
+        
+        
+        flashOffButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
+        flashOffButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        flashOffButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        flashOffButton.leftAnchor.constraint(equalTo: flashOnButton.rightAnchor, constant: 40).isActive = true
     }
     
     // MARK: - Animation
@@ -228,24 +262,115 @@ class CameraControllerViewController: UIViewController {
         
         flashButton.setImage(FlashImage().turnedOn, for: .normal)
         flashButton.tintColor = .white 
-        flashButton.addTarget(self, action: #selector(switchFlashMode), for: .touchUpInside)
+        flashButton.addTarget(self, action: #selector(switchTorchModeElements), for: .touchUpInside)
         flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 15)
+        
+        flashOnButton.setTitle("On", for: .normal)
+        flashOffButton.setTitle("Off", for: .normal)
+        flashAutoButton.setTitle("Auto", for: .normal)
+        
+        flashOnButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        flashOffButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        flashAutoButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        
+        flashOnButton.isHidden = true
+        flashOffButton.isHidden = true
+        flashAutoButton.isHidden = true
     }
     
+    private func setupButtonsTargets() {
+        cancelButton.addTarget(self, action: #selector(dismissAction), for: .touchUpInside)
+        switchCameraButton.addTarget(self, action: #selector(switchCameraDevice), for: .touchUpInside)
+        // torch
+        flashOnButton.addTarget(self, action: #selector(onTorchAction), for: .touchUpInside)
+        flashOffButton.addTarget(self, action: #selector(offTorchAction), for: .touchUpInside)
+        flashAutoButton.addTarget(self, action: #selector(autoTorchAction), for: .touchUpInside)
+        shotButton.addTarget(self, action: #selector(shotAction), for: .touchUpInside)
+    }
     
 }
 
-// MARK: - Flash
+// MARK: - Camera
 
 extension CameraControllerViewController {
     
-    @objc fileprivate func switchFlashMode() {
-        debugPrint("switchFlashMode")
-        if cameraEngine.session.isRunning {
-            cameraEngine.stopSession()
-        } else {
-            cameraEngine.startSession()
+    // MARK: - Torch
+    
+    fileprivate func setupFlashMode(_ mode: AVCaptureFlashMode) {
+        cameraEngine.flashMode = mode
+    }
+    
+    @objc fileprivate func switchTorchModeElements() {
+        flashOnButton.isHidden = areTorchElementsVisibles
+        flashOffButton.isHidden = areTorchElementsVisibles
+        flashAutoButton.isHidden = areTorchElementsVisibles
+        
+        // setup yellow color
+        let flashMode: AVCaptureFlashMode = cameraEngine.flashMode
+        
+        switch flashMode {
+        case .auto:
+            flashAutoButton.setTitleColor(.yellow, for: .normal)
+            flashOnButton.setTitleColor(.white, for: .normal)
+            flashOffButton.setTitleColor(.white, for: .normal)
+        case .on:
+            flashOnButton.setTitleColor(.yellow, for: .normal)
+            flashAutoButton.setTitleColor(.white, for: .normal)
+            flashOffButton.setTitleColor(.white, for: .normal)
+        case .off:
+            flashOffButton.setTitleColor(.yellow, for: .normal)
+            flashAutoButton.setTitleColor(.white, for: .normal)
+            flashOnButton.setTitleColor(.white, for: .normal)
         }
+        
+        if areTorchElementsVisibles {
+            areTorchElementsVisibles = false
+        } else {
+            areTorchElementsVisibles = true
+        }
+    }
+    
+    
+    @objc fileprivate func autoTorchAction() {
+        switchTorchModeElements()
+        setupFlashMode(.auto)
+    }
+    
+    @objc fileprivate func onTorchAction() {
+        switchTorchModeElements()
+        setupFlashMode(.on)
+    }
+    
+    @objc fileprivate func offTorchAction() {
+        switchTorchModeElements()
+        setupFlashMode(.off)
+    }
+
+
+    @objc fileprivate func switchCameraDevice() {
+        cameraEngine.switchCurrentDevice()
+    }
+    
+    @objc fileprivate func shotAction() {
+        cameraEngine.capturePhoto { (image, error) -> (Void) in
+            if error == nil {
+                debugPrint("Here is an image")
+            } else {
+                debugPrint("error", error!.localizedDescription)
+            }
+        }
+    }
+    
+}
+
+
+
+// MARK: - Navigation
+
+extension CameraControllerViewController {
+    
+    @objc fileprivate func dismissAction() {
+        dismiss(animated: true, completion: nil)
     }
     
 }

@@ -180,6 +180,9 @@ open class ImagePickerSheetController: UIViewController {
             // for camera
         }
         
+        if isCameraControllerPreseneted {
+            returnCameraLayerToCell()
+        }
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -445,16 +448,9 @@ extension ImagePickerSheetController {
         cameraEngine.rotationCamera = false
                 
         present(cameraController, animated: false, completion: { [weak self] in
-                    guard self != nil else { return }
 
-                    Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
-                        cameraController.dismiss(animated: true, completion: {
-                            self?.returnCameraLayerToCell()
-                        })
-                        debugPrint("Dismiss")
-                    })
                 })
-                isCameraControllerPreseneted = true
+        isCameraControllerPreseneted = true
     }
 
     
