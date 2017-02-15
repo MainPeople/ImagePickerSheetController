@@ -19,7 +19,7 @@ class CameraControllerViewController: UIViewController {
     private let shotButton = UIButton(type: .system)
     private let cancelButton = UIButton(type: .system)
     private let switchCameraButton = UIButton(type: .system)
-    private let flashButton = UIButton(type: .custom)
+    fileprivate let flashButton = UIButton(type: .custom)
     // Flash mode buttons 
     fileprivate let flashAutoButton = UIButton(type: .custom)
     fileprivate let flashOnButton = UIButton(type: .custom)
@@ -36,7 +36,7 @@ class CameraControllerViewController: UIViewController {
     
     // MARK: - Images
     
-    private struct FlashImage {
+    fileprivate struct FlashImage {
         let turnedOn = UIImage(named: "FlashTurnedOn", in: Bundle(identifier: "com.SCImagePickerSheetController"), compatibleWith: nil)
         let turnedOff = UIImage(named: "FlashTurnedOff", in: Bundle(identifier: "com.SCImagePickerSheetController"), compatibleWith: nil)
     }
@@ -317,6 +317,7 @@ extension CameraControllerViewController {
             flashOnButton.setTitleColor(.yellow, for: .normal)
             flashAutoButton.setTitleColor(.white, for: .normal)
             flashOffButton.setTitleColor(.white, for: .normal)
+            
         case .off:
             flashOffButton.setTitleColor(.yellow, for: .normal)
             flashAutoButton.setTitleColor(.white, for: .normal)
@@ -330,20 +331,25 @@ extension CameraControllerViewController {
         }
     }
     
-    
     @objc fileprivate func autoTorchAction() {
         switchTorchModeElements()
         setupFlashMode(.auto)
+        flashButton.tintColor = .white
+        flashButton.setImage(FlashImage().turnedOn, for: .normal)
     }
     
     @objc fileprivate func onTorchAction() {
         switchTorchModeElements()
         setupFlashMode(.on)
+        flashButton.tintColor = .yellow
+        flashButton.setImage(FlashImage().turnedOn, for: .normal)
     }
     
     @objc fileprivate func offTorchAction() {
         switchTorchModeElements()
         setupFlashMode(.off)
+        flashButton.tintColor = .white
+        flashButton.setImage(FlashImage().turnedOff, for: .normal)
     }
 
 
@@ -362,7 +368,6 @@ extension CameraControllerViewController {
     }
     
 }
-
 
 
 // MARK: - Navigation
