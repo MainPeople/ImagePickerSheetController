@@ -34,6 +34,7 @@ class CameraControllerViewController: UIViewController {
     
     fileprivate var areTorchElementsVisibles = false
     
+    
     // MARK: - Images
     
     fileprivate struct FlashImage {
@@ -56,14 +57,12 @@ class CameraControllerViewController: UIViewController {
         setupButtonsTargets()
         // Camera
         setupFlashMode(.auto)
-        // Observers
-        addObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCameraLayer()
-        
+        addObservers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -180,7 +179,7 @@ class CameraControllerViewController: UIViewController {
         switchCameraButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         switchCameraButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
-        flashButton.widthAnchor.constraint(equalToConstant: 33).isActive = true
+        flashButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
         flashButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         flashButton.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 17).isActive = true
         flashButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
@@ -273,7 +272,7 @@ class CameraControllerViewController: UIViewController {
         flashButton.setImage(FlashImage().turnedOn, for: .normal)
         flashButton.tintColor = .white 
         flashButton.addTarget(self, action: #selector(switchTorchModeElements), for: .touchUpInside)
-        flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 15)
+        flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 27)
         
         flashOnButton.setTitle("On", for: .normal)
         flashOffButton.setTitle("Off", for: .normal)
@@ -302,15 +301,44 @@ class CameraControllerViewController: UIViewController {
     // MARK: - Notification center
     
     private func addObservers() {
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(changeUIElementsPositions), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     // MARK: - Rotation
     
     @objc private func changeUIElementsPositions() {
-        // change switchCameraButton 
-        debugPrint("changeUIElementsPositions")
-        switchCameraButton.transform = CGAffineTransform(rotationAngle: 90)
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            if UIDevice.current.orientation == .landscapeLeft {
+                let rotation = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+                self?.switchCameraButton.transform = rotation
+                self?.flashButton.transform = rotation
+                self?.flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 16, 5, 16)
+            }
+            if UIDevice.current.orientation == .landscapeRight {
+                let transformRotation = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+                self?.switchCameraButton.transform = transformRotation
+                self?.flashButton.transform = transformRotation
+                self?.flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 16, 5, 16)
+            }
+            
+            if UIDevice.current.orientation == .portrait {
+                let transformRotation = CGAffineTransform(rotationAngle: 0)
+                self?.switchCameraButton.transform = transformRotation
+                self?.flashButton.transform = transformRotation
+                self?.flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 27)
+//                let x = UIEdgeInsetsMake(<#T##top: CGFloat##CGFloat#>, <#T##left: CGFloat##CGFloat#>, <#T##bottom: CGFloat##CGFloat#>, <#T##right: CGFloat##CGFloat#>)
+            }
+            
+            if UIDevice.current.orientation == .portraitUpsideDown {
+                let transformRotation = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+                self?.switchCameraButton.transform = transformRotation
+                self?.flashButton.transform = transformRotation
+            }
+            
+        }) { (completion) in
+            
+        }
     }
     
 }
