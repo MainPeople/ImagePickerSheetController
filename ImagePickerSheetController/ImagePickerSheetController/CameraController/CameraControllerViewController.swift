@@ -166,8 +166,8 @@ class CameraControllerViewController: UIViewController {
         
         cameraPreviewView.bottomAnchor.constraint(equalTo: bottomBar.topAnchor).isActive = true
         cameraPreviewView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        cameraPreviewView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        cameraPreviewView.topAnchor.constraint(equalTo: self.topBar.bottomAnchor).isActive = true
+        cameraPreviewView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        cameraPreviewView.topAnchor.constraint(equalTo: topBar.bottomAnchor).isActive = true
         
         // buttons
         shotButton.centerXAnchor.constraint(equalTo: bottomBar.centerXAnchor).isActive = true
@@ -363,7 +363,7 @@ class CameraControllerViewController: UIViewController {
 
 extension CameraControllerViewController {
     
-    // MARK: - Torch
+    // MARK: - Flash
     
     fileprivate func setupFlashMode(_ mode: AVCaptureFlashMode) {
         cameraEngine.flashMode = mode
@@ -436,6 +436,17 @@ extension CameraControllerViewController {
                 debugPrint("error", error!.localizedDescription)
             }
         }
+    }
+    
+    // MARK: - Zoom
+    
+    fileprivate func addZoomGestureRecognizer() {
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchCameraZoom))
+        
+    }
+    
+    @objc private func pinchCameraZoom() {
+    
     }
     
 }
