@@ -163,6 +163,7 @@ open class ImagePickerSheetController: UIViewController {
         // Camera
         cameraEngine.rotationCamera = true
         cameraEngine.currentDevice = .front
+        cameraEngine.sessionPresset = .high
         cameraEngine.startSession()
         // UI
         addUIElements()
