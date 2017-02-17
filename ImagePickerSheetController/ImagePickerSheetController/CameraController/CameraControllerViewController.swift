@@ -19,7 +19,9 @@ class CameraControllerViewController: UIViewController {
     private let shotButton = UIButton(type: .system)
     private let cancelButton = UIButton(type: .system)
     private let switchCameraButton = UIButton(type: .system)
-    fileprivate let flashButton = UIButton(type: .custom)
+    // flash
+    fileprivate let flashSwitchImageView = UIImageView()
+    fileprivate let flashTouchView = UIView()
     // Flash mode buttons 
     fileprivate let flashAutoButton = UIButton(type: .custom)
     fileprivate let flashOnButton = UIButton(type: .custom)
@@ -55,6 +57,8 @@ class CameraControllerViewController: UIViewController {
         // Buttons
         setupButtonsSettings()
         setupButtonsTargets()
+        // ImageViews
+        setupFlashElementsSettings()
         // Camera
         setupFlashMode(.auto)
     }
@@ -137,8 +141,10 @@ class CameraControllerViewController: UIViewController {
         switchCameraButton.translatesAutoresizingMaskIntoConstraints = false
         bottomBar.addSubview(switchCameraButton)
         // flash
-        flashButton.translatesAutoresizingMaskIntoConstraints = false
-        topBar.addSubview(flashButton)
+        flashSwitchImageView.translatesAutoresizingMaskIntoConstraints = false
+        topBar.addSubview(flashSwitchImageView)
+        flashTouchView.translatesAutoresizingMaskIntoConstraints = false
+        topBar.addSubview(flashTouchView)
         flashAutoButton.translatesAutoresizingMaskIntoConstraints = false
         topBar.addSubview(flashAutoButton)
         flashOnButton.translatesAutoresizingMaskIntoConstraints = false
@@ -179,10 +185,17 @@ class CameraControllerViewController: UIViewController {
         switchCameraButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         switchCameraButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
-        flashButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
-        flashButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        flashButton.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 17).isActive = true
-        flashButton.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
+        // Flash
+        
+        flashSwitchImageView.widthAnchor.constraint(equalToConstant: 13).isActive = true
+        flashSwitchImageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        flashSwitchImageView.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 18).isActive = true
+        flashSwitchImageView.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
+        
+        flashTouchView.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        flashTouchView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        flashTouchView.leftAnchor.constraint(equalTo: topBar.leftAnchor, constant: 0).isActive = true
+        flashTouchView.centerYAnchor.constraint(equalTo: topBar.centerYAnchor).isActive = true
         
         // mode 
         
@@ -269,11 +282,6 @@ class CameraControllerViewController: UIViewController {
         switchCameraButton.setImage(switchIcon, for: .normal)
         switchCameraButton.tintColor = .white
         
-        flashButton.setImage(FlashImage().turnedOn, for: .normal)
-        flashButton.tintColor = .white 
-        flashButton.addTarget(self, action: #selector(switchTorchModeElements), for: .touchUpInside)
-        flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 27)
-        
         flashOnButton.setTitle("On", for: .normal)
         flashOffButton.setTitle("Off", for: .normal)
         flashAutoButton.setTitle("Auto", for: .normal)
@@ -297,6 +305,18 @@ class CameraControllerViewController: UIViewController {
         shotButton.addTarget(self, action: #selector(shotAction), for: .touchUpInside)
     }
     
+    private func setupFlashElementsSettings() {
+        flashSwitchImageView.image = FlashImage().turnedOn
+        flashSwitchImageView.tintColor = .white
+        flashSwitchImageView.contentMode = .scaleAspectFit
+        flashSwitchImageView.isUserInteractionEnabled = true
+        
+        flashTouchView.isUserInteractionEnabled = true
+        flashTouchView.backgroundColor = .clear
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(switchFlashModeElements))
+        flashTouchView.addGestureRecognizer(tapGestureRecognizer)
+    }
     
     // MARK: - Notification center
     
@@ -312,28 +332,24 @@ class CameraControllerViewController: UIViewController {
             if UIDevice.current.orientation == .landscapeLeft {
                 let rotation = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
                 self?.switchCameraButton.transform = rotation
-                self?.flashButton.transform = rotation
-                self?.flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 16, 5, 16)
+                self?.flashSwitchImageView.transform = rotation
             }
             if UIDevice.current.orientation == .landscapeRight {
                 let transformRotation = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
                 self?.switchCameraButton.transform = transformRotation
-                self?.flashButton.transform = transformRotation
-                self?.flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 16, 5, 16)
+                self?.flashSwitchImageView.transform = transformRotation
             }
             
             if UIDevice.current.orientation == .portrait {
                 let transformRotation = CGAffineTransform(rotationAngle: 0)
                 self?.switchCameraButton.transform = transformRotation
-                self?.flashButton.transform = transformRotation
-                self?.flashButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 27)
-//                let x = UIEdgeInsetsMake(<#T##top: CGFloat##CGFloat#>, <#T##left: CGFloat##CGFloat#>, <#T##bottom: CGFloat##CGFloat#>, <#T##right: CGFloat##CGFloat#>)
+                self?.flashSwitchImageView.transform = transformRotation
             }
             
             if UIDevice.current.orientation == .portraitUpsideDown {
                 let transformRotation = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
                 self?.switchCameraButton.transform = transformRotation
-                self?.flashButton.transform = transformRotation
+                self?.flashSwitchImageView.transform = transformRotation
             }
             
         }) { (completion) in
@@ -353,7 +369,7 @@ extension CameraControllerViewController {
         cameraEngine.flashMode = mode
     }
     
-    @objc fileprivate func switchTorchModeElements() {
+    @objc fileprivate func switchFlashModeElements() {
         flashOnButton.isHidden = areTorchElementsVisibles
         flashOffButton.isHidden = areTorchElementsVisibles
         flashAutoButton.isHidden = areTorchElementsVisibles
@@ -385,24 +401,24 @@ extension CameraControllerViewController {
     }
     
     @objc fileprivate func autoTorchAction() {
-        switchTorchModeElements()
+        switchFlashModeElements()
         setupFlashMode(.auto)
-        flashButton.tintColor = .white
-        flashButton.setImage(FlashImage().turnedOn, for: .normal)
+        flashSwitchImageView.tintColor = .white
+        flashSwitchImageView.image = FlashImage().turnedOn
     }
     
     @objc fileprivate func onTorchAction() {
-        switchTorchModeElements()
+        switchFlashModeElements()
         setupFlashMode(.on)
-        flashButton.tintColor = .yellow
-        flashButton.setImage(FlashImage().turnedOn, for: .normal)
+        flashSwitchImageView.tintColor = .yellow
+        flashSwitchImageView.image = FlashImage().turnedOn
     }
     
     @objc fileprivate func offTorchAction() {
-        switchTorchModeElements()
+        switchFlashModeElements()
         setupFlashMode(.off)
-        flashButton.tintColor = .white
-        flashButton.setImage(FlashImage().turnedOff, for: .normal)
+        flashSwitchImageView.tintColor = .white
+        flashSwitchImageView.image = FlashImage().turnedOff
     }
 
 
@@ -428,7 +444,10 @@ extension CameraControllerViewController {
 extension CameraControllerViewController {
     
     @objc fileprivate func dismissAction() {
-        dismiss(animated: true, completion: nil)
+        // animation
+        
+        
+        dismiss(animated: false, completion: nil)
     }
     
 }
