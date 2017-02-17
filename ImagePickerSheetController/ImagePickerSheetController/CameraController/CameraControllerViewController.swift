@@ -386,7 +386,6 @@ extension CameraControllerViewController {
             flashOnButton.setTitleColor(.yellow, for: .normal)
             flashAutoButton.setTitleColor(.white, for: .normal)
             flashOffButton.setTitleColor(.white, for: .normal)
-            
         case .off:
             flashOffButton.setTitleColor(.yellow, for: .normal)
             flashAutoButton.setTitleColor(.white, for: .normal)
@@ -405,6 +404,7 @@ extension CameraControllerViewController {
         setupFlashMode(.auto)
         flashSwitchImageView.tintColor = .white
         flashSwitchImageView.image = FlashImage().turnedOn
+        flashSwitchImageView.contentMode = .scaleAspectFit
     }
     
     @objc fileprivate func onTorchAction() {
@@ -412,6 +412,7 @@ extension CameraControllerViewController {
         setupFlashMode(.on)
         flashSwitchImageView.tintColor = .yellow
         flashSwitchImageView.image = FlashImage().turnedOn
+        flashSwitchImageView.contentMode = .scaleAspectFit
     }
     
     @objc fileprivate func offTorchAction() {
@@ -419,6 +420,7 @@ extension CameraControllerViewController {
         setupFlashMode(.off)
         flashSwitchImageView.tintColor = .white
         flashSwitchImageView.image = FlashImage().turnedOff
+        flashSwitchImageView.contentMode = .scaleAspectFill
     }
 
 
