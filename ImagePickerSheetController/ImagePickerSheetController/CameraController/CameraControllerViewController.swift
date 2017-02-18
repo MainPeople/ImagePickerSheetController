@@ -15,7 +15,7 @@ class CameraControllerViewController: UIViewController {
     
     private let bottomBar = UIView()
     private let topBar = UIView()
-    private let cameraPreviewView = UIView()
+    fileprivate let cameraPreviewView = UIView()
     private let shotButton = UIButton(type: .system)
     private let cancelButton = UIButton(type: .system)
     private let switchCameraButton = UIButton(type: .system)
@@ -61,6 +61,8 @@ class CameraControllerViewController: UIViewController {
         setupFlashElementsSettings()
         // Camera
         setupFlashMode(.auto)
+        // Camera pinch 
+        addZoomGestureRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -442,11 +444,12 @@ extension CameraControllerViewController {
     
     fileprivate func addZoomGestureRecognizer() {
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchCameraZoom))
-        
+        cameraPreviewView.addGestureRecognizer(pinchGestureRecognizer)
+        cameraPreviewView.isUserInteractionEnabled = true
     }
     
     @objc private func pinchCameraZoom() {
-    
+        debugPrint("pinchCameraZoom")
     }
     
 }
