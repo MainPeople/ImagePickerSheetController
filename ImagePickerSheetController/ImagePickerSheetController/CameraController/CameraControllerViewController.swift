@@ -443,13 +443,24 @@ extension CameraControllerViewController {
     // MARK: - Zoom
     
     fileprivate func addZoomGestureRecognizer() {
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchCameraZoom))
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchCameraZoom(_:)))
         cameraPreviewView.addGestureRecognizer(pinchGestureRecognizer)
         cameraPreviewView.isUserInteractionEnabled = true
     }
     
-    @objc private func pinchCameraZoom() {
-        debugPrint("pinchCameraZoom")
+    @objc private func pinchCameraZoom(_ gesture: UIPinchGestureRecognizer) {
+        if cameraEngine.currentDevice == .back {
+            let pinchVelocityDividerFactor: CGFloat = 5 // 5
+            let desiredZoomFactor: CGFloat = cameraEngine.cameraZoomFactor + CGFloat(atan2f(Float(gesture.velocity), Float(pinchVelocityDividerFactor)))
+            
+            let maxZoomFactor: CGFloat = 5
+            
+            let zoomFactor = max(1, min(desiredZoomFactor, maxZoomFactor))
+            
+            debugPrint("zoomFactor", zoomFactor)
+            
+            cameraEngine.cameraZoomFactor = zoomFactor
+        }
     }
     
 }
