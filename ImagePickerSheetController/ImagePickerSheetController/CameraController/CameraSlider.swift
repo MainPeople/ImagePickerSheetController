@@ -148,15 +148,11 @@ class CameraSlider: UIControl {
     }
     
     private func animationByValue(_ currentValue: CGFloat) {
-        let width = frame.width
-        
-        var X: CGFloat = 0
-//        if currentValue != minumValue {
-            X = width / maximumValue * currentValue
-//        } else {
-//            X = minumValue
-//        }
-        
+        let onePercentFrame = (bounds.width - thumbSizeValue) / 100
+        let oneValuePercent = (maximumValue - minumValue) / 100
+        let currentPercents = currentValue / oneValuePercent - 25
+        debugPrint("currentPercents", currentPercents)
+        let X = currentPercents * onePercentFrame
         debugPrint("X", X)
     
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
