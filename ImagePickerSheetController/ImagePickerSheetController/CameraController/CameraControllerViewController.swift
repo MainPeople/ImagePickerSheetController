@@ -67,6 +67,8 @@ class CameraControllerViewController: UIViewController {
         setupFlashMode(.auto)
         // Camera pinch 
         addZoomGestureRecognizer()
+        // slider 
+        setupCameraSliderSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,7 +141,6 @@ class CameraControllerViewController: UIViewController {
         view.addSubview(topBar)
         cameraPreviewView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cameraPreviewView)
-        
         
         cameraSlider.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cameraSlider)
@@ -241,6 +242,7 @@ class CameraControllerViewController: UIViewController {
         }
         cameraSlider.bottomAnchor.constraint(equalTo: cameraPreviewView.bottomAnchor, constant: -30).isActive = true
         cameraSlider.centerXAnchor.constraint(equalTo: cameraPreviewView.centerXAnchor).isActive = true
+        cameraSlider.isHidden = true
     }
     
     // MARK: - Animation
@@ -483,8 +485,21 @@ extension CameraControllerViewController {
             
             debugPrint("zoomFactor", zoomFactor)
             
+            changeSliderValue(zoomFactor)
             cameraEngine.cameraZoomFactor = zoomFactor
         }
+    }
+    
+    fileprivate func setupCameraSliderSettings() {
+        cameraSlider.minumValue = 1
+        cameraSlider.maximumValue = 5
+    }
+    
+    // MARK: - Slider
+    
+    private func changeSliderValue(_ value: CGFloat) {
+        cameraSlider.isHidden = false
+        cameraSlider.value = value 
     }
     
 }
