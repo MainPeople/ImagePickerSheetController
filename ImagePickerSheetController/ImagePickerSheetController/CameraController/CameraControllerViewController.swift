@@ -509,6 +509,7 @@ extension CameraControllerViewController {
 extension CameraControllerViewController: CameraSliderDelegate {
     
     func didChangeValue(_ value: CGFloat) {
+        debugPrint("CameraSliderDelegate", value)
         cameraEngine.cameraZoomFactor = value
     }
     
