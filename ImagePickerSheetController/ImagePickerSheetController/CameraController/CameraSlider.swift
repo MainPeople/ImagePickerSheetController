@@ -46,6 +46,10 @@ class CameraSlider: UIControl {
     fileprivate var thumbXConstraint: NSLayoutConstraint!
     fileprivate var maximumTrackRightConstraint: NSLayoutConstraint!
     
+    // MARK: - Hidding
+    
+    private var timer: Timer!
+    
     // MARK: - lifecycle
     
     override func willMove(toSuperview newSuperview: UIView?) {
@@ -131,6 +135,9 @@ class CameraSlider: UIControl {
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             guard self != nil else { return }
             
+            // stop timer
+            self!.stopHiddingTimer()
+            
             if point.x > 0 && point.x < self!.frame.width - self!.thumbSizeValue {
                 
                 self!.trackView.maxX = point.x + self!.thumbSizeValue
@@ -141,6 +148,8 @@ class CameraSlider: UIControl {
                 
                 self!.changeValue(point.x)
                 
+                // hidding timer
+                self?.startHiddingTimer()
             }
         }) { (completion) in
             
@@ -150,24 +159,25 @@ class CameraSlider: UIControl {
     private func animationByValue(_ currentValue: CGFloat) {
         let onePercentFrame = (bounds.width - thumbSizeValue) / 100
         let oneValuePercent = (maximumValue - minumValue) / 100
-        let currentPercents = currentValue / oneValuePercent - 25
-        debugPrint("currentPercents", currentPercents)
+        let currentPercents = currentValue / oneValuePercent - 25 // because minus 1 / 4
         let X = currentPercents * onePercentFrame
-        debugPrint("X", X)
     
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             guard self != nil else { return }
+            // stop timer
+            self!.stopHiddingTimer()
             
             let checkValue = self!.bounds.width - self!.thumbSizeValue
             debugPrint("X", X, "checkValue", checkValue)
             
             if X <= checkValue  {
-                debugPrint("animation perfrom")
                 self!.trackView.maxX = X + self!.thumbSizeValue
                 self!.trackView.maxWidth =  UIScreen.main.bounds.width - 30 - self!.thumbSizeValue - X - 2
                 self!.trackView.minWidth = X + 2 - self!.thumbSizeValue / 2
                 self!.trackView.setNeedsDisplay()
                 self!.thumbXConstraint.constant = X
+                // hidding timer
+                self?.startHiddingTimer()
             } else {
                 debugPrint("animation NOT perfrom")
             }
@@ -183,6 +193,25 @@ class CameraSlider: UIControl {
         let result = oneValuePercent * frameValueMultipler + minumValue
         delegate?.didChangeValue?(result)
     }
+    
+    // MARK: - Hidding functions
+    
+    private func startHiddingTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { [weak self] (timer) in
+            self?.hide()
+        })
+    }
+    
+    private func stopHiddingTimer() {
+        if timer != nil {
+            timer.invalidate()
+        }
+    }
+    
+    @objc private func hide() {
+        isHidden = true 
+    }
+
     
 }
 

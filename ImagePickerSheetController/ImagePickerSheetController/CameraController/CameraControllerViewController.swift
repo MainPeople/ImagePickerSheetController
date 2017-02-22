@@ -242,7 +242,6 @@ class CameraControllerViewController: UIViewController {
         }
         cameraSlider.bottomAnchor.constraint(equalTo: cameraPreviewView.bottomAnchor, constant: -30).isActive = true
         cameraSlider.centerXAnchor.constraint(equalTo: cameraPreviewView.centerXAnchor).isActive = true
-//        cameraSlider.isHidden = true
     }
     
     // MARK: - Animation
@@ -492,14 +491,14 @@ extension CameraControllerViewController {
         cameraSlider.minumValue = 1
         cameraSlider.maximumValue = 5
         cameraSlider.delegate = self
+        cameraSlider.isHidden = true
     }
     
     // MARK: - Slider
     
     private func changeSliderValue(_ value: CGFloat) {
-        debugPrint("changeSliderValue", value)
-//        cameraSlider.isHidden = false
         cameraSlider.value = value
+        cameraSlider.isHidden = false 
     }
     
 }
@@ -521,8 +520,6 @@ extension CameraControllerViewController {
     
     @objc fileprivate func dismissAction() {
         // animation
-        
-        
         dismiss(animated: false, completion: nil)
     }
     
