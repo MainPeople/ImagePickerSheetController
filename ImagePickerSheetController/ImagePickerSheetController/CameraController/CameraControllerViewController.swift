@@ -242,7 +242,7 @@ class CameraControllerViewController: UIViewController {
         }
         cameraSlider.bottomAnchor.constraint(equalTo: cameraPreviewView.bottomAnchor, constant: -30).isActive = true
         cameraSlider.centerXAnchor.constraint(equalTo: cameraPreviewView.centerXAnchor).isActive = true
-        cameraSlider.isHidden = true
+//        cameraSlider.isHidden = true
     }
     
     // MARK: - Animation
@@ -497,8 +497,8 @@ extension CameraControllerViewController {
     
     private func changeSliderValue(_ value: CGFloat) {
         debugPrint("changeSliderValue", value)
-        cameraSlider.isHidden = false
-        cameraSlider.value = value 
+//        cameraSlider.isHidden = false
+        cameraSlider.value = value
     }
     
 }

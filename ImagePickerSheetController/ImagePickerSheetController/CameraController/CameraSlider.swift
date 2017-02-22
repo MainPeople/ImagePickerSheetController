@@ -132,13 +132,15 @@ class CameraSlider: UIControl {
             guard self != nil else { return }
             
             if point.x > 0 && point.x < self!.frame.width - self!.thumbSizeValue {
+                
                 self!.trackView.maxX = point.x + self!.thumbSizeValue
                 self!.trackView.maxWidth =  UIScreen.main.bounds.width - 30 - self!.thumbSizeValue - point.x - 2
                 self!.trackView.minWidth = point.x + 2 - self!.thumbSizeValue / 2
                 self!.trackView.setNeedsDisplay()
                 self!.thumbXConstraint.constant = point.x
                 
-                return
+                self!.changeValue(point.x)
+                
             }
         }) { (completion) in
             
@@ -176,6 +178,23 @@ class CameraSlider: UIControl {
         }) { (completion) in
             
         }
+    }
+    
+    
+    private func changeValue(_ pointX: CGFloat) {
+        let onePercentFrame = (bounds.width - thumbSizeValue) / 100
+        debugPrint("onePercentFrame", onePercentFrame)
+        let oneValuePercent = maximumValue / 100
+        debugPrint("oneValuePercent", oneValuePercent)
+        
+        let frameValueMultipler = pointX / onePercentFrame
+        debugPrint("frameValueMultipler", frameValueMultipler)
+        
+        let result = oneValuePercent * frameValueMultipler
+        
+        debugPrint("result", result)
+        
+        delegate?.didChangeValue?(result)
     }
     
 }
