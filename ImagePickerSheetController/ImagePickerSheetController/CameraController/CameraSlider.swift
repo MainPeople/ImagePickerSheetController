@@ -10,6 +10,10 @@ import UIKit
 
 class CameraSlider: UIControl {
     
+    // MARK: - Delegates
+    
+    weak var delegate: CameraSliderDelegate?
+    
     // MARK: - Data
     
     var minumValue: CGFloat = 0
@@ -144,26 +148,30 @@ class CameraSlider: UIControl {
     private func animationByValue(_ currentValue: CGFloat) {
         let width = frame.width
         
-        debugPrint("width", width)
-    
         var X: CGFloat = 0
-        if currentValue != minumValue {
+//        if currentValue != minumValue {
             X = width / maximumValue * currentValue
-        } else {
-            X = minumValue
-        }
+//        } else {
+//            X = minumValue
+//        }
         
-        debugPrint("newX", X)
+        debugPrint("X", X)
     
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             guard self != nil else { return }
             
-            if X > 0 && X < self!.frame.width - self!.thumbSizeValue {
+            let checkValue = self!.bounds.width - self!.thumbSizeValue
+            debugPrint("X", X, "checkValue", checkValue)
+            
+            if X <= checkValue  {
+                debugPrint("animation perfrom")
                 self!.trackView.maxX = X + self!.thumbSizeValue
                 self!.trackView.maxWidth =  UIScreen.main.bounds.width - 30 - self!.thumbSizeValue - X - 2
                 self!.trackView.minWidth = X + 2 - self!.thumbSizeValue / 2
                 self!.trackView.setNeedsDisplay()
                 self!.thumbXConstraint.constant = X
+            } else {
+                debugPrint("animation NOT perfrom")
             }
         }) { (completion) in
             

@@ -483,8 +483,6 @@ extension CameraControllerViewController {
             
             let zoomFactor = max(1, min(desiredZoomFactor, maxZoomFactor))
             
-            debugPrint("zoomFactor", zoomFactor)
-            
             changeSliderValue(zoomFactor)
             cameraEngine.cameraZoomFactor = zoomFactor
         }
@@ -498,6 +496,7 @@ extension CameraControllerViewController {
     // MARK: - Slider
     
     private func changeSliderValue(_ value: CGFloat) {
+        debugPrint("changeSliderValue", value)
         cameraSlider.isHidden = false
         cameraSlider.value = value 
     }
