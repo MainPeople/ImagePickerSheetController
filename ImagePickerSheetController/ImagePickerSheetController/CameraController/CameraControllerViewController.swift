@@ -491,6 +491,7 @@ extension CameraControllerViewController {
     fileprivate func setupCameraSliderSettings() {
         cameraSlider.minumValue = 1
         cameraSlider.maximumValue = 5
+        cameraSlider.delegate = self
     }
     
     // MARK: - Slider
@@ -503,6 +504,15 @@ extension CameraControllerViewController {
     
 }
 
+// MARK: - Camera Slider
+
+extension CameraControllerViewController: CameraSliderDelegate {
+    
+    func didChangeValue(_ value: CGFloat) {
+        cameraEngine.cameraZoomFactor = value
+    }
+    
+}
 
 // MARK: - Navigation
 
