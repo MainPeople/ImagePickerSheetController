@@ -452,6 +452,7 @@ extension CameraControllerViewController {
 
 
     @objc fileprivate func switchCameraDevice() {
+        cameraSlider.isHidden = true
         cameraEngine.switchCurrentDevice()
     }
     
@@ -498,7 +499,7 @@ extension CameraControllerViewController {
     
     private func changeSliderValue(_ value: CGFloat) {
         cameraSlider.value = value
-        cameraSlider.isHidden = false 
+        cameraSlider.isHidden = false
     }
     
 }
