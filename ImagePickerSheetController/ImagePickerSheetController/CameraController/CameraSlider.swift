@@ -182,13 +182,9 @@ class CameraSlider: UIControl {
     
     private func changeValue(_ pointX: CGFloat) {
         let onePercentFrame = (bounds.width - thumbSizeValue) / 100
-        debugPrint("onePercentFrame", onePercentFrame)
-        let oneValuePercent = maximumValue / 100
-        debugPrint("oneValuePercent", oneValuePercent)
+        let oneValuePercent = (maximumValue - minumValue) / 100
         let frameValueMultipler = pointX / onePercentFrame
-        debugPrint("frameValueMultipler", frameValueMultipler)
-        let result = oneValuePercent * frameValueMultipler
-        debugPrint("result", result)
+        let result = oneValuePercent * frameValueMultipler + minumValue
         delegate?.didChangeValue?(result)
     }
     
