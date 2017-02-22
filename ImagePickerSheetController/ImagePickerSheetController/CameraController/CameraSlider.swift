@@ -189,7 +189,7 @@ class CameraSlider: UIControl {
         debugPrint("frameValueMultipler", frameValueMultipler)
         let result = oneValuePercent * frameValueMultipler
         debugPrint("result", result)
-        delegate?.didChangeValue?(result + 1)
+        delegate?.didChangeValue?(result)
     }
     
 }
