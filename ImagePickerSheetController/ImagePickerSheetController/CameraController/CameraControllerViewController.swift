@@ -27,6 +27,10 @@ class CameraControllerViewController: UIViewController {
     fileprivate let flashOnButton = UIButton(type: .custom)
     fileprivate let flashOffButton = UIButton(type: .custom)
     
+    // Slider 
+    
+    fileprivate let cameraSlider = CameraSlider(frame: .zero)
+    
     // MARK: - Camera
     
     var cameraLayer = AVCaptureVideoPreviewLayer()
@@ -135,6 +139,11 @@ class CameraControllerViewController: UIViewController {
         view.addSubview(topBar)
         cameraPreviewView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(cameraPreviewView)
+        
+        
+        cameraSlider.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(cameraSlider)
+        
         // buttons
         shotButton.translatesAutoresizingMaskIntoConstraints = false
         bottomBar.addSubview(shotButton)
@@ -217,6 +226,21 @@ class CameraControllerViewController: UIViewController {
         flashOffButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
         flashOffButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         flashOffButton.leftAnchor.constraint(equalTo: flashOnButton.rightAnchor, constant: 40).isActive = true
+        
+        
+        
+        let widthValue = UIScreen.main.bounds.width
+        let heightValue = UIScreen.main.bounds.height
+        
+        cameraSlider.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        if widthValue < heightValue {
+            cameraSlider.widthAnchor.constraint(equalTo: cameraPreviewView.widthAnchor, multiplier: 1, constant: -30).isActive = true
+            
+        } else {
+            cameraSlider.widthAnchor.constraint(equalTo: cameraPreviewView.heightAnchor, multiplier: 1, constant: -30).isActive = true
+        }
+        cameraSlider.bottomAnchor.constraint(equalTo: cameraPreviewView.bottomAnchor, constant: -30).isActive = true
+        cameraSlider.centerXAnchor.constraint(equalTo: cameraPreviewView.centerXAnchor).isActive = true
     }
     
     // MARK: - Animation

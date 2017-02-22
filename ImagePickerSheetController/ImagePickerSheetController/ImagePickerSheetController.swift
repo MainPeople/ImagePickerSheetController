@@ -480,11 +480,7 @@ extension ImagePickerSheetController {
         imagePicker.cameraDevice = .front
         
         guard let cameraLiveCell = previewPhotoCollectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? ImagePickerLiveCameraCollectionCell else { return }
-        let heroID = "LiveHero"
-        cameraLiveCell.heroID = heroID
-        
-        imagePicker.view.heroID = heroID
-        
+        let heroID = "LiveHero"        
         
         present(imagePicker, animated: true, completion: nil)
     }
