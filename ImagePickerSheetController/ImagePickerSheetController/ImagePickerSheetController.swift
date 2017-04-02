@@ -131,7 +131,13 @@ open class ImagePickerSheetController: UIViewController {
     }
     
     // MARK: - Initialization
-    
+
+	public init() {
+		self.mediaType = .imageAndVideo
+		super.init(nibName: nil, bundle: nil)
+		initialize()
+	}
+
     public init(mediaType: ImagePickerMediaType) {
         self.mediaType = mediaType
         super.init(nibName: nil, bundle: nil)
